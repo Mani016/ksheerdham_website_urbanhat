@@ -3,13 +3,16 @@ import agent from "../../agent";
 
 
 const Cart = () => {
+    const [data, setData] = React.useState([]);
     const [items, setItems] = React.useState([]);
+
     React.useEffect(() => {
         agent.Customers.getCart().then((res) => {
+            setData(res.data);
             setItems(res.data.items)
         }).catch((err) => console.error(err))
     }, []);
-    console.log(items)
+    console.log(data)
     return (
         <Fragment>
 
@@ -35,7 +38,6 @@ const Cart = () => {
                                                 <th></th>
                                             </tr>
                                         </thead>
-
                                         {
                                             items.map((item, index) =>
                                                 <tbody key={index}>
@@ -57,7 +59,6 @@ const Cart = () => {
                                                         </td>
                                                     </tr>
                                                 </tbody>
-
                                             )
                                         }
                                     </table>
@@ -73,9 +74,7 @@ const Cart = () => {
                             <div className="col-lg-4 col-sm-12">
                                 <div className="grand-total-area">
                                     <h4>Cart Totals</h4>
-                                    <p className="sub-total">Subtotal<span className="amt"> $230.00</span></p>
-                                    <p className="delivery">delivery<span className="amt"> $10.00</span></p>
-                                    <p className="discount">discount<span className="amt"> $20.00</span></p>
+                                    <p className="sub-total">Subtotal<span className="amt">{data.subTotal}</span></p>
                                     <p className="grand-total">total <span className="amt">$200.00</span></p>
                                     <a className="pro-checkout" href="#/">Proceed To Checkout</a>
                                 </div>

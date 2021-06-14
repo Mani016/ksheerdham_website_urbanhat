@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import MobileMenu from "../components/mobile-menu/MobileMenu";
 import MobileBtn from "../components/mobile-menu/MobileBtn";
+import agent from "../agent";
 
 
 const Menu = () => {
@@ -10,7 +11,12 @@ const Menu = () => {
         const offcanvasMobileMenu = document.querySelector(".search_icon_inr");
         offcanvasMobileMenu.classList.toggle("active");
     };
-
+    const [items, setItems] = React.useState([]);
+    React.useEffect(() => {
+        agent.Customers.getCart().then((res) => {
+            setItems(res.data.items)
+        }).catch((err) => console.error(err))
+    }, []);
     return (
 
         <div className="menu_area">
@@ -89,14 +95,11 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li className="header_cart_icon">
-                                <Link to="cart"><i className="icon-glyph-13"></i><span className="number_cart">0</span></Link>
+                                <Link to="cart"><i className="icon-glyph-13"></i><span className="number_cart">{items.length}</span></Link>
                             </li>
                             <li className="header_cart_icon">
                                 <Link to="/login"><i className="fa fa-user"></i></Link>
-
                             </li>
-                         
-
                         </ul>
                     </div>
                     {/* End: Cart  */}

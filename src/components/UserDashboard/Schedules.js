@@ -30,10 +30,11 @@ const Schedules = () => {
     }
     const [modalShow, setModalShow] = React.useState(false);
     const [value, onChange] = React.useState(new Date());
-    const [data,setData] = React.useState([]);
+    // const [data,setData] = React.useState([]);
     React.useEffect(()=>{
         agent.Customers.subscriptionsCalendar().then((res)=>{
-            setData(res)
+            // setData(res)
+            console.log(res)
         })
     },[])
     return (
