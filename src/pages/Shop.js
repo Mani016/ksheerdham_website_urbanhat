@@ -5,12 +5,14 @@ import LayoutOne from "../layouts/LayoutOne";
 import Breadcrumb from "../components/Breadcrumb";
 import agent from '../agent';
 import DummyProduct from '../assets/images/product_1.png'
-import Alert from '../utils/Alert';
+    import Alert from '../utils/Alert';
+
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 const Products = () => {
     const [products, setProducts] = React.useState([]);
     const [productName, setProductName] = React.useState('');
     const [searched, setSearched] = React.useState(false);
+    const token = localStorage.getItem("token");
     React.useEffect(() => {
         GetAllProducts();
     }, [])
@@ -35,12 +37,26 @@ const Products = () => {
             setProducts(res.data.products)
         ).catch((err) => console.error(err))
     }
-    function addToCart(){
+    function addToCart(id) {
+        if (token) {
+            let data = {
+                productId: id
+            }
+            agent.Customers.addToCart(data).then((res) => {
+                Alert.showToastAlert('success', 'Product Added Successfully');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+            ).catch((err) => console.error(err))
+        }
+        else {
+            Alert.showToastAlert('error', 'Login is required')
+        }
+    }
+    // function subscribeProduct() {
 
-    }
-    function subscribeProduct(){
-        
-    }
+    // }
 
     const productMap = products.map((valu, i) => {
         return (
@@ -65,22 +81,24 @@ const Products = () => {
                         <span className="product_price">Rs.{valu.price}</span>
                     </div>
                     <div className="project_view">
-                    <OverlayTrigger
-                            placement="right"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={<Tooltip >
-                                Add to cart    
-                            </Tooltip>}>
-                            <Link to="#/"><i className="icon-glyph-13"></i></Link>
-                        </OverlayTrigger>
-                        <OverlayTrigger
-                            placement="right"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={<Tooltip >
-                                Subscribe
-                            </Tooltip>}>
-                            <Link to="#/" className="project-link"><i className="fa fa-play"></i></Link>
-                        </OverlayTrigger>
+                        {valu.status === 'ACTIVE' && <>
+                            <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={<Tooltip >
+                                    Add to cart
+                                </Tooltip>}>
+                                <div onClick={() => { addToCart(valu._id) }} className="cursor-pointer"><i className="icon-glyph-13"></i></div>
+                            </OverlayTrigger>
+                            {valu.subscriptionType === 'SUBSCRIBE' && <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={<Tooltip >
+                                    Subscribe
+                                </Tooltip>}>
+                                <Link to="#/" className="project-link"><i className="fa fa-play"></i></Link>
+                            </OverlayTrigger>}
+                        </>}
                     </div>
 
                 </div>

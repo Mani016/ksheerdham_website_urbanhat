@@ -3,21 +3,26 @@ import MetaTags from "react-meta-tags";
 import LayoutOne from "../layouts/LayoutOne";
 import Typewriter from 'typewriter-effect';
 import logo from '../assets/images/logo.webp'
-import user from '../assets/images/user.jpg';
 import { Link, useHistory } from "react-router-dom";
 import agent from "../agent";
 import Alert from "../utils/Alert";
-// import axios from "axios";
-// import jwt_decode from "jwt-decode";
-// import qs from "qs";
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
     const [isLogin, setIsLogin] = React.useState(false);
     const [mobileNum, setMobileNum] = React.useState('');
     const [created, setCreated] = React.useState(false);
     const [OTP, setOTP] = React.useState('');
-
+    const token = localStorage.getItem("token");
+    const [decoded, setDecoded] = React.useState({});
     let history = useHistory();
+
+    React.useEffect(() => {
+        if (token) {
+            setIsLogin(true);
+            setDecoded(jwt_decode(token));
+        }
+    }, [token]);
     function GetOtp() {
         let formIsComplete = true;
 
@@ -175,12 +180,14 @@ const Login = () => {
                                         <>
                                             <div className="register">
                                                 <div className="sub-title">
-                                                    Welcome  Manisha Gupta
+                                                    Welcome {decoded.name}
                                                 </div>
-                                                <img id="imagePreview" src={user} alt="User"></img>
+                                                <div className="sub-title my-3">
+                                                    {decoded.email}
+                                                </div>
                                             </div>
                                             <div className="d-flex mt-5 justify-content-center">
-                                                <input type="button" id="submit" name="send" onClick={() => console.log('hi')} className="submit-contact submitBnt mx-2" value="Portal" />
+                                                <input type="button" id="submit" name="send" onClick={() => history.push('/user-dashboard')} className="submit-contact submitBnt mx-2" value="Portal" />
                                                 <input type="button" id="submit" name="send" onClick={() => setIsLogin(false)} className="cancel-contact submitBnt" value="Log Out" />
                                             </div>
                                         </>}

@@ -6,6 +6,7 @@ import Subscriptions from "./Subscriptions";
 import Wallet from "./Wallet";
 import Cart from "./Cart";
 import Schedules from "./Schedules";
+// import jwt_decode from "jwt-decode";
 
 const UserDashboard = () => {
 

@@ -20,17 +20,17 @@ const requests = {
     get: url =>
         superagent
             .get(`${API_ROOT}${url}`)
-            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzYxMjgzOX0.kp90ituslodAiMUFt9MdWEyexjXARpm82F2BJ923QOs")
+            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzY4MzkxMX0.sIaqsvvC28EpfG0EgZH-hRn9EFauXpr2augtMiY3imA")
             .then(responseBody),
     put: (url, body) =>
         superagent
             .put(`${API_ROOT}${url}`, body)
-            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzYxMjgzOX0.kp90ituslodAiMUFt9MdWEyexjXARpm82F2BJ923QOs")
+            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzY4MzkxMX0.sIaqsvvC28EpfG0EgZH-hRn9EFauXpr2augtMiY3imA")
             .then(responseBody),
     post: (url, body) =>
         superagent
             .post(`${API_ROOT}${url}`, body)
-            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzYxMjgzOX0.kp90ituslodAiMUFt9MdWEyexjXARpm82F2BJ923QOs")
+            .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjEsImlhdCI6MTYyMzY4MzkxMX0.sIaqsvvC28EpfG0EgZH-hRn9EFauXpr2augtMiY3imA")
             .then(responseBody),
     postLoginOTP: (url, body) =>
         superagent
@@ -61,11 +61,11 @@ const Customers = {
     addMoney: (data) => requests.put(`customer/wallet/add-money`, data),
     billingHistory: () => requests.get(`customer/product/order/history`),
     getCart: () => requests.get(`customer/product/cart/getCart`),
-    addToCart: (data) => requests.post(`customer/product/cart/add`, { data }),
-    removeFromCart: (data) => requests.post(`customer/product/cart/subtract`, { data }),
+    addToCart: (data) => requests.post(`customer/product/cart/add`, data),
+    removeFromCart: (data) => requests.post(`customer/product/cart/subtract`,data),
     toggleSubscriptions: (data) => requests.put(`customer/subscription/${data}/status`),
     endSubscriptions: (data) => requests.put(`customer/subscription/${data}/end`),
-    subscriptionsCalendar:()=> requests.get(`customer/subscription/calendar`),
+    subscriptionsCalendar: () => requests.get(`customer/subscription/calendar`),
 }
 const Services = {
     Register,

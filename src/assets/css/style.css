@@ -1873,6 +1873,12 @@ section {
   font-size: 16px;
   padding: 8px 14px;
 }
+.product_wrp .project_view div {
+  margin-right: 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  padding: 8px 14px;
+}
 
 .product_wrp:hover .project_view {
   opacity: 1;
@@ -1881,11 +1887,16 @@ section {
 .product_wrp:hover .project_view a {
   opacity: 1;
 }
+.product_wrp:hover .project_view div {
+  opacity: 1;
+}
 
 .product_wrp:hover .project_view a:last-child {
   margin-top: 70px;
 }
-
+.product_wrp:hover .project_view div:last-child {
+  margin-top: 70px;
+}
 .product_wrp:hover .product_info h4 {
   color: #fff;
 }
@@ -2127,7 +2138,18 @@ section {
   opacity: 0;
   color: #1f83ad;
 }
-
+.project_view div {
+  background: #fff;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-right: 43px;
+  padding: 9px 15px;
+  border-radius: 50%;
+  margin-top: 30px;
+  opacity: 0;
+  color: #1f83ad;
+}
 .project-section .arrows-slick {
   text-align: right;
   margin-top: 35px;
@@ -6075,7 +6097,7 @@ p.title-country {
   overflow: auto;
   height: 400px;
   align-items: center;
-  padding: 20px 20px 0;
+  /* padding: 20px 20px 0; */
   display: flex;
 }
 #register-form-wrapper {
