@@ -27,7 +27,8 @@ import Register from "./components/Register";
 import UserDashboard from "./components/UserDashboard";
 import Categories from "./components/Categories";
 import SubCategories from "./components/Categories/SubCategories";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
+import "./assets/css/modal.scss";
 function App() {
   return (
     <Router>
@@ -91,7 +92,9 @@ function App() {
             component={Categories}
           />
           <Route
-            path={`${process.env.PUBLIC_URL + "/categories/:id/sub-categories"}`}
+            path={`${
+              process.env.PUBLIC_URL + "/categories/:id/sub-categories"
+            }`}
             component={SubCategories}
           />
           {/* <Route

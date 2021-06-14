@@ -63,42 +63,15 @@ const Login = () => {
                 customer_otp: OTP,
                 mobile_no: mobileNum,
             }
-            // const url = "http://159.89.163.98/api/customer/auth/login/otp";
-
-            // let options = {
-            //     headers: {
-            //         "Content-Type": "application/x-www-form-urlencoded",
-            //         "Access-Control-Allow-Origin": "*",  
-            //     },
-            //     method: "post",
-            //     data: qs.stringify(data),
-            //     url
-            // }; 
-            // axios(options)
-            //     .then((response) => {
-            //         const { headers: { authorization } } = response;
-            //         axios.defaults.headers.common['Authorization'] = authorization;
-            //         console.log(axios.defaults.headers.common['Authorization'], authorization)
-            //         localStorage.setItem('token', authorization)
-
-            //         return response.data
-            //     }).catch(er => {
-            //         console.log("er", er)
-            //         return er
-            //     });
 
             agent.Login.loginOtp(data).then((res) => {
-                if (!res.body.status) {
-                    Alert.showToastAlert('error', res.body.message);
+                if (!res.status) {
+                    Alert.showToastAlert('error', res.message);
                 }
                 else {
-                    var token = res.headers.authorization
-                    //    var hi=  res.headers.get('x-auth-token')
-                    console.log(token, res);
-                    // const decoded = jwt_decode(token);
-                    // console.log(decoded)
-                    Alert.showToastAlert('success', res.body.message);
-                    history.push('/user-dashboard');
+                    localStorage.setItem("token", res.token)
+                    Alert.showToastAlert('success', res.message);
+                    history.push('/user-dashboard/my-subscriptions');
                 }
             }).catch((err) => console.error(err))
         }
