@@ -1,0 +1,38 @@
+//plugin scroll style
+
+.TrackY {
+    width: 7px !important;
+    background-color: transparent !important;
+  
+    .ScrollbarsCustom-ThumbY {
+      background-color: gray !important;
+    }
+  }
+  
+  .TrackX {
+    height: 7px !important;
+    background-color: transparent !important;
+  
+    .ScrollbarsCustom-ThumbX {
+      background-color: gray !important;
+    }
+  }
+
+  
+  //navbar scroll bar style
+  .scrollbar {
+    scrollbar-color:gray transparent;
+    scrollbar-width: thin;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+      height: 7px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: gray;
+    }
+  }
+  
