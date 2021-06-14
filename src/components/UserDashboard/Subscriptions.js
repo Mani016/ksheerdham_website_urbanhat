@@ -41,7 +41,6 @@ const Subscriptions = () => {
                                     {data.length === 0 ? <div className="estimate-ship">
                                         <h4>NO Subscriptions</h4></div> :
                                         data.map((item, index) =>
-                                            <>
                                                 <div className="col-md-6 col-12 mb-2" key={index}>
                                                     <div className="card">
                                                         <div className="card-body">
@@ -71,9 +70,7 @@ const Subscriptions = () => {
                                                         </div>
 
                                                     </div>
-
                                                 </div>
-                                            </>
                                         )
                                     }
                                 </div>

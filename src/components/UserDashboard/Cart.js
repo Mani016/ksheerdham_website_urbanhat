@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import agent from "../../agent";
+import Alert from "../../utils/Alert";
 
 
 const Cart = () => {
@@ -12,13 +13,31 @@ const Cart = () => {
             setItems(res.data.items)
         }).catch((err) => console.error(err))
     }, []);
-    console.log(data)
+    function RemoveFromCart(id) {
+        let data = {
+            productId: id
+        }
+        agent.Customers.removeFromCart(data).then((res) => {
+            Alert.showToastAlert('success', 'Product Removed Successfully');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+        ).catch((err) => console.error(err))
+
+    }
+    function Checkout() {
+        let data = { product: [] }
+        items.forEach((item) => {
+            data.product.push({ _id: item.productId._id, quantity: item.quantity })
+        })
+        agent.Customers.addOrder(data).then((res) => {
+            Alert.showToastAlert('success', 'Order Placed Successfully')
+        })
+    }
     return (
         <Fragment>
-
-
             <div className="cart-page">
-
                 <div className="shop_cart">
                     <div className="container">
                         <div className="shop_cart_title">
@@ -55,7 +74,7 @@ const Cart = () => {
                                                         </td>
                                                         <td className="unit"><span>{item.total}</span>
                                                         </td>
-                                                        <td><a href="#/"><i className="fa fa-trash"></i></a>
+                                                        <td className="cursor-pointer"><div onClick={() => RemoveFromCart(item.productId._id)}><i className="fa fa-trash"></i></div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -75,8 +94,8 @@ const Cart = () => {
                                 <div className="grand-total-area">
                                     <h4>Cart Totals</h4>
                                     <p className="sub-total">Subtotal<span className="amt">{data.subTotal}</span></p>
-                                    <p className="grand-total">total <span className="amt">$200.00</span></p>
-                                    <a className="pro-checkout" href="#/">Proceed To Checkout</a>
+                                    <p className="grand-total">total <span className="amt">{data.subTotal}</span></p>
+                                    <div className="pro-checkout cursor-pointer" onClick={() => Checkout()}>Proceed To Checkout</div>
                                 </div>
                             </div>
                         </div>

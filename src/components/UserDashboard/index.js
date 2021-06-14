@@ -6,52 +6,53 @@ import Subscriptions from "./Subscriptions";
 import Wallet from "./Wallet";
 import Cart from "./Cart";
 import Schedules from "./Schedules";
+import { Link, useLocation } from "react-router-dom";
+import OrderHistory from "./OrderHistory";
 // import jwt_decode from "jwt-decode";
 
 const UserDashboard = () => {
-
+    const location = useLocation();
+    let split = location.pathname.split('/')
     let serviceTabMenuData = [
-        { tabMenuName: 'My Subscriptions', icon: 'play' },
-        { tabMenuName: 'My Schedules', icon: 'clock-o' },
-        { tabMenuName: 'My Wallet', icon: 'money' },
-        { tabMenuName: 'My Cart', icon: 'cart-plus' },
-        { tabMenuName: 'Order History', icon: 'history' },
-
+        { tabMenuName: 'My Subscriptions', icon: 'play', url: 'my-subscriptions' },
+        { tabMenuName: 'My Schedules', icon: 'clock-o', url: 'my-schedules' },
+        { tabMenuName: 'My Wallet', icon: 'money', url: 'my-wallet' },
+        { tabMenuName: 'My Cart', icon: 'cart-plus', url: 'my-cart' },
+        { tabMenuName: 'Order History', icon: 'history', url: 'order-history' },
     ];
-    let serviceTabContentData = [
-        {
-
-            contentDesc: Subscriptions
-        },
-
-        {
-            contentDesc: Schedules
-        },
-        {
-            contentDesc: Wallet
-        },
-        {
-            contentDesc: Cart
-        },
-        {
-            contentDesc: Cart
-        },
-    ];
-
+    const [value, setValue] = React.useState(0);
+    React.useEffect(() => {
+        if (split[2] === 'my-subscriptions') {
+            setValue(0)
+        }
+        else if (split[2] === 'my-schedules') {
+            setValue(1)
+        }
+        else if (split[2] === 'my-wallet') {
+            setValue(2)
+        }
+        else if (split[2] === 'my-cart') {
+            setValue(3)
+        }
+        else {
+            setValue(4)
+        }
+    }, [split])
     let serviceTabMenuDatalist = serviceTabMenuData.map((val, i) => {
         return (
-            <Tab key={i}>
-                <span className="shop-nav-tabs"><i className={`fa fa-${val.icon}`} />&nbsp;&nbsp;{val.tabMenuName}</span>
+            <Tab key={i} onClick={() => { setValue(i) }} className={value === i ? "react-tabs__tab tab_selected" : ""}>
+                <Link to={`/user-dashboard/${val.url}`} className="shop-nav-tabs"><i className={`fa fa-${val.icon}`} />&nbsp;&nbsp;{val.tabMenuName}</Link>
             </Tab>
         )
     });
 
-    let serviceTabContentDatalist = serviceTabContentData.map((val, i) => {
+    let serviceTabContentDatalist = serviceTabMenuData.map((val, i) => {
         return (
-            <TabPanel key={i}>
+            <TabPanel key={i} >
                 <div className="shop-tab-content-wrapper">
-                    <div className="shop-tab-content">
-                        <val.contentDesc />
+                    <div className="shop-tab-content ">
+                        {split[2] === 'my-subscriptions' ? <Subscriptions /> : split[2] === 'my-wallet' ? <Wallet />
+                            : split[2] === 'my-schedules' ? <Schedules /> : split[2] === 'my-cart' ? <Cart /> : <OrderHistory />}
                     </div>
                 </div>
             </TabPanel>

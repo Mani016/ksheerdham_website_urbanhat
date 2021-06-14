@@ -5,8 +5,7 @@ import LayoutOne from "../layouts/LayoutOne";
 import Breadcrumb from "../components/Breadcrumb";
 import agent from '../agent';
 import DummyProduct from '../assets/images/product_1.png'
-    import Alert from '../utils/Alert';
-
+import Alert from '../utils/Alert';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 const Products = () => {
     const [products, setProducts] = React.useState([]);
