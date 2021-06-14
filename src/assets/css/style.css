@@ -487,7 +487,7 @@ section {
 .menu_area {
   position: sticky;
   top: 0px;
-  z-index: 9999;
+  z-index: 999;
   box-shadow: 0 3px 6px rgba(54, 54, 54, 0.01);
 }
 .menu_area .container {
@@ -1857,7 +1857,7 @@ section {
   height: 100%;
   content: "";
   top: 0px;
-  background: rgba(157, 202, 0, 0.55);
+  background: rgba(31, 131, 173, 0.55);
   opacity: 0;
   left: 0px;
 }
@@ -1901,9 +1901,9 @@ section {
   color: #fff;
 }
 
-.product_wrp:hover .product_rating li {
+/* .product_wrp:hover .product_rating li {
   color: #8ab003;
-}
+} */
 
 .product_wrp:hover .on_sale {
   z-index: 999;
@@ -6320,7 +6320,7 @@ input[type="number"] {
   position: absolute;
   top: 15px;
   transform: rotate(310deg);
-  background: #f9e08b;
+  background: rgba(31, 131, 173, 1);
   color: #fff;
   width: 100px;
   left: -30px;
@@ -6342,4 +6342,50 @@ input[type="number"] {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
+}
+
+/* Common Css*/
+.form_row {
+  display: flex;
+}
+.form_row .input_fields {
+  width: 48%;
+  padding: 0 1%;
+}
+@media (max-width: 767px) {
+  .form_row {
+    flex-direction: column;
+  }
+  .form_row .input_fields {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+select,
+input {
+  /* margin-bottom: 12px; */
+  height: 35px;
+  width: 100%;
+  padding: 0px 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 3px;
+  outline: none;
+}
+
+.green_btn {
+  margin-top: 20px;
+  background: #1f83ad;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 700;
+  color: #fff;
+  transition: 0.5s;
+  border: 1px solid transparent;
+}
+.green_btn:hover {
+  opacity: 0.8;
 }
