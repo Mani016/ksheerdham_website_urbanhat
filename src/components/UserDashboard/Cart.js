@@ -1,27 +1,31 @@
 import React, { Fragment } from "react";
 import agent from "../../agent";
+import AppContext from "../../Context";
 import Alert from "../../utils/Alert";
 
 
 const Cart = () => {
     const [data, setData] = React.useState([]);
     const [items, setItems] = React.useState([]);
-
+    const { setItemsInCart } = React.useContext(AppContext);
     React.useEffect(() => {
+        GetCart();
+        // eslint-disable-next-line
+    }, []);
+    function GetCart() {
         agent.Customers.getCart().then((res) => {
             setData(res.data);
-            setItems(res.data.items)
+            setItems(res.data.items);
+            setItemsInCart(res.data.items.length);
         }).catch((err) => console.error(err))
-    }, []);
+    }
     function RemoveFromCart(id) {
         let data = {
             productId: id
         }
         agent.Customers.removeFromCart(data).then((res) => {
             Alert.showToastAlert('success', 'Product Removed Successfully');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            GetCart();
         }
         ).catch((err) => console.error(err))
 
@@ -33,9 +37,7 @@ const Cart = () => {
         agent.Customers.addToCart(data)
             .then((res) => {
                 Alert.showToastAlert("success", "Product Added Successfully");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                GetCart();
             })
             .catch((err) => console.error(err));
 
@@ -46,10 +48,14 @@ const Cart = () => {
             data.product.push({ _id: item.productId._id, quantity: item.quantity })
         })
         agent.Customers.addOrder(data).then((res) => {
-            Alert.showToastAlert('success', 'Order Placed Successfully');
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            if (res.code === 400) {
+                Alert.showToastAlert('error', 'Some Error');
+            }
+            else {
+                Alert.showToastAlert('success', 'Order Placed Successfully');
+                GetCart();
+            }
+
         })
     }
     return (
@@ -85,15 +91,13 @@ const Cart = () => {
                                                         </td>
                                                         <td className="unit"><span>{item.productId.price}</span>
                                                         </td>
-                                                        <td className="qty">
-                                                            <div> {item.quantity} </div>
-                                                        </td>
                                                         <td className="unit">  <div className="quantity"><span onClick={() => { AddToCart(item.productId._id) }}>+</span>
-                                                            <input type="number" value={item.total} readOnly />
+                                                            <input type="number" value={item.quantity} readOnly />
                                                             <span onClick={() => { RemoveFromCart(item.productId._id) }}>-</span></div>
                                                         </td>
-                                                        {/* <td className="cursor-pointer"><div onClick={() => RemoveFromCart(item.productId._id)}><i className="fa fa-trash"></i></div>
-                                                        </td> */}
+                                                        <td className="qty">
+                                                            <div> {item.total} </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             )

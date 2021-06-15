@@ -4,14 +4,15 @@ import "../../assets/css/order.scss";
 
 import DummyProduct from "../../assets/images/product_1.png";
 const OrderHistory = () => {
+  const [data,setData] = React.useState([]);
   React.useEffect(() => {
     agent.Customers.billingHistory().then((res) => {
-      console.log(res);
+      setData(res);
     });
   }, []);
   return (
     <React.Fragment>
-      <div className="order_history_outer container py-5">
+      <div className="order_history_outer container py-3">
         <div className="order_no"> 2 Order Placed</div>
         <div className="card mb-4">
           <div className="card-header d-md-flex d-block  justify-content-between">

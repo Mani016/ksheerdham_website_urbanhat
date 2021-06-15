@@ -173,11 +173,9 @@ const Register = () => {
                                             <div className="d-flex mt-3 justify-content-center">
                                                 <input type="button" name="send" onClick={() => GetOtp()}
                                                     className="submit-contact submitBnt mx-2" value="Get OTP" />
-
                                             </div>
                                         </form>
                                             : <form>
-
                                                 <p className="input_fields input_name">
                                                     <label>Mobile Number<span className="required">*</span></label>
                                                     <input

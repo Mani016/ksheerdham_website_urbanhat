@@ -9,7 +9,7 @@ import Modal from "../../components/Modal";
 import AppContext from "../../Context";
 
 const FlashSales = () => {
-  const { accountStatus } = React.useContext(AppContext);
+  const { accountStatus, GetCart } = React.useContext(AppContext);
   const [data, setData] = React.useState([]);
   const [productId, setProductId] = React.useState('');
   const [subscribtionModal, showSubscribtionModal] = React.useState(false);
@@ -28,14 +28,17 @@ const FlashSales = () => {
       let data = {
         productId: id,
       };
-      agent.Customers.addToCart(data)
+      if (accountStatus === 1) {
+        agent.Customers.addToCart(data)
         .then((res) => {
           Alert.showToastAlert("success", "Product Added Successfully");
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+          GetCart()
         })
         .catch((err) => console.error(err));
+      }
+      else {
+        Alert.showToastAlert("error", "You'r not an active user");
+      }
     } else {
       Alert.showToastAlert("error", "Login is required");
     }
@@ -75,45 +78,43 @@ const FlashSales = () => {
           </div>
           <div className="project_view">
             <p>{val.offerText}</p>
-            {val.status === "ACTIVE" && (
-              <>
+            <>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={<Tooltip>Add to cart</Tooltip>}
+              >
+                <div
+                  onClick={() => {
+                    addToCart(val.productId._id);
+                  }}
+                  className="cursor-pointer"
+                >
+                  <i className="icon-glyph-13"></i>
+                </div>
+              </OverlayTrigger>
+              {val.subscriptionType === "SUBSCRIBE" && (
                 <OverlayTrigger
                   placement="right"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={<Tooltip>Add to cart</Tooltip>}
+                  overlay={<Tooltip>Subscribe</Tooltip>}
                 >
                   <div
+                    className="project-link cursor-pointer"
                     onClick={() => {
-                      addToCart(val._id);
+                      if (accountStatus === 1) {
+                        showSubscribtionModal(true); setProductId(val.productId._id)
+                      } else {
+                        Alert.showToastAlert("error", "You'r not a active user");
+
+                      }
                     }}
-                    className="cursor-pointer"
                   >
-                    <i className="icon-glyph-13"></i>
+                    <i className="fa fa-play"></i>
                   </div>
                 </OverlayTrigger>
-                {val.subscriptionType === "SUBSCRIBE" && (
-                  <OverlayTrigger
-                    placement="right"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={<Tooltip>Subscribe</Tooltip>}
-                  >
-                    <div
-                      className="project-link cursor-pointer"
-                      onClick={() => {
-                        if (accountStatus === 1) {
-                          showSubscribtionModal(true); setProductId(val._id)
-                        } else {
-                          Alert.showToastAlert("error", "You'r not a active user");
-
-                        }
-                      }}
-                    >
-                      <i className="fa fa-play"></i>
-                    </div>
-                  </OverlayTrigger>
-                )}
-              </>
-            )}
+              )}
+            </>
           </div>
         </div>
       </div>

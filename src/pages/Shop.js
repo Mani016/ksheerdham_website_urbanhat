@@ -11,7 +11,7 @@ import SubscriptionModal from "./SubscriptionModal";
 import AppContext from "../Context";
 
 const Products = () => {
-    const { accountStatus } = React.useContext(AppContext);
+    const { accountStatus,GetCart } = React.useContext(AppContext);
     const [subscribtionModal, showSubscribtionModal] = React.useState(false);
     const [products, setProducts] = React.useState([]);
     const [productName, setProductName] = React.useState("");
@@ -52,9 +52,7 @@ const Products = () => {
                 agent.Customers.addToCart(data)
                     .then((res) => {
                         Alert.showToastAlert("success", "Product Added Successfully");
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
+                        GetCart();
                     })
                     .catch((err) => console.error(err));
             }
