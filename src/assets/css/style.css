@@ -6240,11 +6240,19 @@ input[type="number"] {
   background: #ca3c08;
 }
 .react-tabs__tab--selected {
-  background: #fff;
+  /* background: #fff;
+  border-color: #aaa;
+  color: black;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #aaa; */
+}
+.tab_selected{
+    background: #fff;
   border-color: #aaa;
   color: black;
   border-radius: 5px 5px 0 0;
   border: 1px solid #aaa;
+  padding:3px 0px 3px 12px !important;
 }
 .react-tabs__tab {
   display: inline-block;
@@ -6254,6 +6262,7 @@ input[type="number"] {
   list-style: none;
   padding: 6px 12px;
   cursor: pointer;
+  margin: 0px 8px;
 }
 .react-tabs__tab-list {
   border-bottom: 1px solid #aaa;
@@ -6402,4 +6411,19 @@ input {
 .no_data {
   max-width: 300px;
   margin: 0 auto;
+}
+.quantity span{
+  width: 35px;
+  height: 35px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+td .quantity{
+  display: flex;
+  padding: 20px 0;
 }

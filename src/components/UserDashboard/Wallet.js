@@ -9,9 +9,7 @@ const Wallet = () => {
         agent.Customers.wallet().then((res) => {
             setData(res.data)
         }).catch((err) => console.error(err))
-        agent.Customers.billingHistory().then((res) => {
-            console.log(res)
-        })
+      
     }, [refresh]);
     function AddAdmount() {
         let data = {

@@ -1,57 +1,42 @@
 import React, { Fragment } from "react";
-// import { Modal } from "react-bootstrap";
 import Calendar from "react-calendar";
 import agent from "../../agent";
 import Modal from "../Modal";
 import DummyProduct from "../../assets/images/product_1.png";
+import Loader from "../../pages/loader";
+import Alert from "../../utils/Alert";
 const Schedules = () => {
-  //   function MyVerticallyCenteredModal(props) {
-  //     return (
-  //       <Modal
-  //         {...props}
-  //         size="lg"
-  //         aria-labelledby="contained-modal-title-vcenter"
-  //         centered
-  //       >
-  //         <Modal.Header closeButton>
-  //           <Modal.Title id="contained-modal-title-vcenter">
-  //             Modal heading
-  //           </Modal.Title>
-  //         </Modal.Header>
-  //         <Modal.Body>
-  //           <h4>Centered Modal</h4>
-  //           <p>
-  //             Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-  //             dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-  //             ac consectetur ac, vestibulum at eros.
-  //           </p>
-  //         </Modal.Body>
-  //       </Modal>
-  //     );
-  //   }
+
   const [modalShow, setModalShow] = React.useState(false);
   const [value, onChange] = React.useState(new Date());
-  // const [data,setData] = React.useState([]);
-  React.useEffect(() => {
-    agent.Customers.subscriptionsCalendar().then((res) => {
-      // setData(res)
-      console.log(res);
+  const [data, setData] = React.useState([]);
+  const [pending, setPending] = React.useState(true);
+  function GetSubscriptions(date) {
+    setPending(true);
+    agent.Customers.subscriptionsCalendar(date).then((res) => {
+      setData(res.data)
+      setModalShow(true);
+      setPending(false);
     });
-  }, []);
+  }
+  function UpdateSubscription(id, productId, quantity, orderDate) {
+    setPending(true)
+    agent.Customers.updateSubscription(id, productId, { quantity: quantity }).then((res) => {
+      Alert.showToastAlert('success', res.message);
+      GetSubscriptions(orderDate);
+    })
+  }
+
   return (
     <Fragment>
-      {/* <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      /> */}
+
       <div className="d-flex justify-content-center my-5">
         <Calendar
           className="w-100"
           onChange={onChange}
           value={value}
           onClickDay={(value, event) => {
-            console.log("Clicked day: ", value);
-            setModalShow(true);
+            GetSubscriptions(new Date(value).setHours(5, 30, 0, 0))
           }}
         />
         {modalShow && (
@@ -61,54 +46,31 @@ const Schedules = () => {
             className="schedule_modal"
             style={{ maxWidth: "550px" }}
           >
-            <div className="datail_card">
-              <div className="left">
-                <img src={DummyProduct} alt="" />
-                <h3>
-                  Apples <span>1000 Ltr </span>
-                </h3>
+            {data.map((item, index) =>
+              <div key={index}>
+                {pending ? <Loader height={'250px'} /> :
+                  <div className="datail_card" >
+                    <div className="left">
+                      <div></div>
+                      <img src={item.image ? item.image : DummyProduct} alt="" />
+                      <h3>
+                        {item.product_name} <span>{item.unit_size} {item.unit} </span>
+                      </h3>
+                    </div>
+                    <div className="right">
+                      <div className="quantity">
+                        <span onClick={() => { UpdateSubscription(item.subscription, item._id, item.quantity + 1, item.orderDate) }}>+</span>
+                        <input type="number" value={item.quantity} readOnly />
+                        <span onClick={() => { UpdateSubscription(item.subscription, item._id, item.quantity - 1, item.orderDate) }}>-</span>
+                      </div>
+                      <div className="price">{item.amount}</div>
+                    </div>
+
+                  </div>
+                }
               </div>
-              <div className="right">
-                <div className="quantity">
-                  <span>+</span>
-                  <input type="number" />
-                  <span>-</span>
-                </div>
-                <div className="price">Rs88</div>
-              </div>
-            </div>
-            <div className="datail_card">
-              <div className="left">
-                <img src={DummyProduct} alt="" />
-                <h3>
-                  Apples <span>1000 Ltr </span>
-                </h3>
-              </div>
-              <div className="right">
-                <div className="quantity">
-                  <span>+</span>
-                  <input type="number" />
-                  <span>-</span>
-                </div>
-                <div className="price">Rs88</div>
-              </div>
-            </div>
-            <div className="datail_card">
-              <div className="left">
-                <img src={DummyProduct} alt="" />
-                <h3>
-                  Apples <span>1000 Ltr </span>
-                </h3>
-              </div>
-              <div className="right">
-                <div className="quantity">
-                  <span>+</span>
-                  <input type="number" />
-                  <span>-</span>
-                </div>
-                <div className="price">Rs88</div>
-              </div>
-            </div>
+
+            )}
           </Modal>
         )}
       </div>
