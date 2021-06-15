@@ -1824,7 +1824,7 @@ section {
   border-radius: 12px;
   top: -10px;
   left: 10px;
-  z-index: 999;
+  z-index: 20;
 }
 .inactive_status {
   position: absolute;
@@ -1834,7 +1834,7 @@ section {
   border-radius: 12px;
   top: -10px;
   left: 10px;
-  z-index: 999;
+  z-index: 20;
 }
 .product_rating li {
   display: inline-block;
