@@ -7,16 +7,19 @@ import agent from "../agent";
 
 
 const Menu = () => {
+    const token = localStorage.getItem("token")
     const triggerSearch = () => {
         const offcanvasMobileMenu = document.querySelector(".search_icon_inr");
         offcanvasMobileMenu.classList.toggle("active");
     };
     const [items, setItems] = React.useState([]);
     React.useEffect(() => {
-        agent.Customers.getCart().then((res) => {
-            setItems(res.data.items)
-        }).catch((err) => console.error(err))
-    }, []);
+        if (token) {
+            agent.Customers.getCart().then((res) => {
+                setItems(res.data.items)
+            }).catch((err) => console.error(err))
+        }
+    }, [token]);
     return (
 
         <div className="menu_area">
@@ -58,7 +61,7 @@ const Menu = () => {
                                             </li>
                                             <li><Link to="/about-us">About Us</Link>
                                             </li>
-                                            <li><Link to="/single-services">My Cart</Link>
+                                            <li><Link to={token ? "/user-dashboard/my-cart" : "/"}>My Cart</Link>
                                             </li>
                                         </ul>
                                     </li>
@@ -95,7 +98,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li className="header_cart_icon">
-                                <Link to="cart"><i className="icon-glyph-13"></i><span className="number_cart">{items.length}</span></Link>
+                                <Link to={token ? "/user-dashboard/my-cart" : "/"}><i className="icon-glyph-13"></i><span className="number_cart">{items.length}</span></Link>
                             </li>
                             <li className="header_cart_icon">
                                 <Link to="/login"><i className="fa fa-user"></i></Link>

@@ -3,12 +3,13 @@ import MetaTags from "react-meta-tags";
 import LayoutOne from "../layouts/LayoutOne";
 import Typewriter from 'typewriter-effect';
 import logo from '../assets/images/logo.webp'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import agent from "../agent";
 import Alert from "../utils/Alert";
 import { setItemToStore } from "../utils/utils";
 
 const Register = () => {
+    let history = useHistory();
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [address, setAddress] = React.useState('');
@@ -80,7 +81,8 @@ const Register = () => {
                 }
                 else {
                     Alert.showToastAlert('success', res.message);
-                    setItemToStore("user", res.user);
+                    setItemToStore("token", res.user.token);
+                    history.push('/user-dashboard/my-subscriptions');
                 }
             }).catch((err) => console.error(err))
         }
@@ -96,9 +98,6 @@ const Register = () => {
                 />
             </MetaTags>
             <LayoutOne>
-
-
-
                 <div className="container pt-2">
                     <div className="row ">
                         <div className="col-md-7 col-xs-12 d-none d-md-block">

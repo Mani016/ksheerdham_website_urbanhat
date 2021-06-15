@@ -36,7 +36,7 @@ const Schedules = () => {
           onChange={onChange}
           value={value}
           onClickDay={(value, event) => {
-            GetSubscriptions(new Date(value).setHours(5, 30, 0, 0))
+            GetSubscriptions(new Date(value).setHours(0, 0, 0, 0))
           }}
         />
         {modalShow && (
@@ -59,9 +59,9 @@ const Schedules = () => {
                     </div>
                     <div className="right">
                       <div className="quantity">
-                        <span onClick={() => { UpdateSubscription(item.subscription, item._id, item.quantity + 1, item.orderDate) }}>+</span>
+                        <span onClick={() => { UpdateSubscription(item.subscription, item.product, item.quantity + 1, item.orderDate) }}>+</span>
                         <input type="number" value={item.quantity} readOnly />
-                        <span onClick={() => { UpdateSubscription(item.subscription, item._id, item.quantity - 1, item.orderDate) }}>-</span>
+                        <span onClick={() => { UpdateSubscription(item.subscription, item.product, item.quantity - 1, item.orderDate) }}>-</span>
                       </div>
                       <div className="price">{item.amount}</div>
                     </div>

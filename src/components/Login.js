@@ -7,8 +7,11 @@ import { Link, useHistory } from "react-router-dom";
 import agent from "../agent";
 import Alert from "../utils/Alert";
 import jwt_decode from "jwt-decode";
+import AppContext from "../Context";
 
 const Login = () => {
+    const {TotalProducts} = React.useContext(AppContext);
+    console.log(TotalProducts)
     const [isLogin, setIsLogin] = React.useState(false);
     const [mobileNum, setMobileNum] = React.useState('');
     const [created, setCreated] = React.useState(false);
@@ -160,8 +163,8 @@ const Login = () => {
                                                 </div>
                                             </div>
                                             <div className="d-flex mt-5 justify-content-center">
-                                                <input type="button" id="submit" name="send" onClick={() => history.push('/user-dashboard')} className="submit-contact submitBnt mx-2" value="Portal" />
-                                                <input type="button" id="submit" name="send" onClick={() => setIsLogin(false)} className="cancel-contact submitBnt" value="Log Out" />
+                                                <input type="button" id="submit" name="send" onClick={() => history.push('/user-dashboard/my-subscriptions')} className="submit-contact submitBnt mx-2" value="Portal" />
+                                                <input type="button" id="submit" name="send" onClick={() => {setIsLogin(false);localStorage.removeItem("token")}} className="cancel-contact submitBnt" value="Log Out" />
                                             </div>
                                         </>}
 

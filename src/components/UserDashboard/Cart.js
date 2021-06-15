@@ -46,7 +46,10 @@ const Cart = () => {
             data.product.push({ _id: item.productId._id, quantity: item.quantity })
         })
         agent.Customers.addOrder(data).then((res) => {
-            Alert.showToastAlert('success', 'Order Placed Successfully')
+            Alert.showToastAlert('success', 'Order Placed Successfully');
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         })
     }
     return (

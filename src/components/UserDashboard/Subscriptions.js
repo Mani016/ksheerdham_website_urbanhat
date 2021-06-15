@@ -11,12 +11,15 @@ const Subscriptions = () => {
     React.useEffect(() => {
         setPending(true);
         let options = { pageIndex: 0, pageSize: 1000 };
-        agent.Customers.subscriptions(options)
+        setTimeout(() => {
+            agent.Customers.subscriptions(options)
             .then((res) => {
                 setData(res.data);
                 setPending(false);
             })
             .catch((err) => console.error(err));
+        }, 1000);
+       
     }, [refresh]);
     function ToggleSubscriptions(id) {
         agent.Customers.toggleSubscriptions(id)
