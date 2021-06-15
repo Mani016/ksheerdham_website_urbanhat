@@ -5494,10 +5494,12 @@ p.checkout-coupon input[type="submit"] {
   border: 1px solid #e1e1e1;
   border-radius: 3px;
   font-weight: normal;
-  height: 40px;
+  height: 35px;
   padding: 0 10px;
   transition: all 0.3s ease 0s;
-  width: 60px;
+  max-width: 115px;
+  text-align: center;
+  margin: 0 10px;
 }
 .table-responsive tbody tr.table-info td {
   vertical-align: middle;
@@ -6246,13 +6248,13 @@ input[type="number"] {
   border-radius: 5px 5px 0 0;
   border: 1px solid #aaa; */
 }
-.tab_selected{
-    background: #fff;
+.tab_selected {
+  background: #fff;
   border-color: #aaa;
   color: black;
   border-radius: 5px 5px 0 0;
   border: 1px solid #aaa;
-  padding:3px 0px 3px 12px !important;
+  padding: 3px 0px 3px 12px !important;
 }
 .react-tabs__tab {
   display: inline-block;
@@ -6412,7 +6414,7 @@ input {
   max-width: 300px;
   margin: 0 auto;
 }
-.quantity span{
+.quantity span {
   width: 35px;
   height: 35px;
   border: 1px solid #ddd;
@@ -6420,10 +6422,12 @@ input {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin: 0 10px;
   font-size: 16px;
   font-weight: bold;
 }
-td .quantity{
+td .quantity {
   display: flex;
   padding: 20px 0;
+  justify-content: center;
 }

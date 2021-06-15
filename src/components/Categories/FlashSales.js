@@ -1,4 +1,5 @@
 import React from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Slider from "react-slick";
 import agent from "../../agent";
 import DummyProduct from "../../assets/images/product_1.png";
@@ -115,6 +116,37 @@ const FlashSales = () => {
           </div>
           <div className="project_view">
             <p>{val.offerText}</p>
+            <>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={<Tooltip>Add to cart</Tooltip>}
+              >
+                <div
+                  // onClick={() => {
+                  //   addToCart(valu._id);
+                  // }}
+                  className="cursor-pointer"
+                >
+                  <i className="icon-glyph-13"></i>
+                </div>
+              </OverlayTrigger>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={<Tooltip>Subscribe</Tooltip>}
+              >
+                <div
+                  className="project-link cursor-pointer"
+                  // onClick={() => {
+                  //   showSubscribtionModal(true);
+                  //   setProductId(valu._id);
+                  // }}
+                >
+                  <i className="fa fa-play"></i>
+                </div>
+              </OverlayTrigger>
+            </>
           </div>
         </div>
       </div>
