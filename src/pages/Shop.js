@@ -8,14 +8,16 @@ import Alert from "../utils/Alert";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import Modal from "../components/Modal";
 import SubscriptionModal from "./SubscriptionModal";
+import AppContext from "../Context";
 
 const Products = () => {
+    const { accountStatus } = React.useContext(AppContext);
     const [subscribtionModal, showSubscribtionModal] = React.useState(false);
     const [products, setProducts] = React.useState([]);
     const [productName, setProductName] = React.useState("");
     const [searched, setSearched] = React.useState(false);
     const token = localStorage.getItem("token");
-    const [productId,setProductId] = React.useState('');
+    const [productId, setProductId] = React.useState('');
 
     React.useEffect(() => {
         GetAllProducts();
@@ -46,21 +48,24 @@ const Products = () => {
             let data = {
                 productId: id,
             };
-            agent.Customers.addToCart(data)
-                .then((res) => {
-                    Alert.showToastAlert("success", "Product Added Successfully");
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                })
-                .catch((err) => console.error(err));
+            if (accountStatus === 1) {
+                agent.Customers.addToCart(data)
+                    .then((res) => {
+                        Alert.showToastAlert("success", "Product Added Successfully");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    })
+                    .catch((err) => console.error(err));
+            }
+            else {
+                Alert.showToastAlert("error", "You'r not a active user");
+            }
         } else {
             Alert.showToastAlert("error", "Login is required");
         }
     }
-    // function subscribeProduct() {
 
-    // }
 
     const productMap = products.map((valu, i) => {
         return (
@@ -121,7 +126,14 @@ const Products = () => {
                                     >
                                         <div
                                             className="project-link cursor-pointer"
-                                            onClick={() => { showSubscribtionModal(true); setProductId(valu._id) }}
+                                            onClick={() => {
+                                                if (accountStatus === 1) {
+                                                    showSubscribtionModal(true); setProductId(valu._id)
+                                                } else {
+                                                    Alert.showToastAlert("error", "You'r not a active user");
+
+                                                }
+                                            }}
                                         >
                                             <i className="fa fa-play"></i>
                                         </div>
@@ -195,8 +207,8 @@ const Products = () => {
                     onClose={() => showSubscribtionModal(false)}
                     className="subscription_modal"
                 >
-                    <SubscriptionModal productId={productId} 
-                    showSubscribtionModal={showSubscribtionModal}/>
+                    <SubscriptionModal productId={productId}
+                        showSubscribtionModal={showSubscribtionModal} />
                 </Modal>
             )}
         </Fragment>

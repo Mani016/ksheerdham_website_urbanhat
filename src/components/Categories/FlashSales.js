@@ -3,9 +3,18 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Slider from "react-slick";
 import agent from "../../agent";
 import DummyProduct from "../../assets/images/product_1.png";
+import SubscriptionModal from "../../pages/SubscriptionModal";
+import Alert from "../../utils/Alert";
+import Modal from "../../components/Modal";
+import AppContext from "../../Context";
 
 const FlashSales = () => {
+  const { accountStatus } = React.useContext(AppContext);
   const [data, setData] = React.useState([]);
+  const [productId, setProductId] = React.useState('');
+  const [subscribtionModal, showSubscribtionModal] = React.useState(false);
+  const token = localStorage.getItem("token");
+
   React.useEffect(() => {
     agent.Products.flashSales()
       .then((res) => {
@@ -13,6 +22,24 @@ const FlashSales = () => {
       })
       .catch((err) => console.error(err));
   }, []);
+
+  function addToCart(id) {
+    if (token) {
+      let data = {
+        productId: id,
+      };
+      agent.Customers.addToCart(data)
+        .then((res) => {
+          Alert.showToastAlert("success", "Product Added Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        })
+        .catch((err) => console.error(err));
+    } else {
+      Alert.showToastAlert("error", "Login is required");
+    }
+  }
   console.log(data);
   var settings = {
     autoplay: true,
@@ -22,80 +49,12 @@ const FlashSales = () => {
     infinite: true,
     centerMode: false,
     variableWidth: true,
-    // centerPadding: "200px",
     speed: 500,
-    // slidesToShow: 3,
     slidesToScroll: 1,
-    // responsive: [
-    //   {
-    //     breakpoint: 1199,
-    //     settings: {
-    //       slidesToShow: 3,
-    //       slidesToScroll: 1,
-    //       centerMode: true,
-    //     //   centerPadding: "80px",
-    //       arrows: false,
-    //       dots: false,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 991,
-    //     settings: {
-    //       slidesToShow: 3,
-    //       slidesToScroll: 1,
-    //       centerPadding: "40px",
-    //       centerMode: false,
-    //       arrows: false,
-    //       dots: false,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 767,
-    //     settings: {
-    //       slidesToShow: 2,
-    //       slidesToScroll: 1,
-    //       centerMode: false,
-    //       arrows: false,
-    //       dots: false,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 580,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1,
-    //       centerMode: false,
-    //       arrows: false,
-    //       dots: false,
-    //     },
-    //   },
-    // ],
   };
 
   let ImageGalleryDataList = data.map((val, i) => {
     return (
-      //   <div
-      //     className="col-md-12 swiper-slide service-gallery__single-slide"
-      //     key={i}
-      //   >
-      //     <div className="project-item item">
-      //       <div className="project_slide_img item">
-      //         <img
-      //           src={val.productId.image ? val.productId.image : DummyProduct}
-      //           alt="product"
-      //         />
-      //       </div>
-      //       <div className="project_text">
-      //         <h4> Product Name{val.productName}</h4>
-      //         <div className="project_link"> Offer text{val.offerText}</div>
-      //       </div>
-      //     </div>
-      //     <div>
-      //       <h4 className=" "> Unit Size{val.productId.unitSize}</h4>
-      //       <h4 className=" "> Offer Price{val.productPrice}</h4>
-      //       <h4 className=" "> Price{val.productStrikePrice}</h4>
-      //     </div>
-      //   </div>
       <div className="col-sm-12" key={i}>
         <div className="product_wrp cat_box">
           <div className="product_img">
@@ -116,37 +75,45 @@ const FlashSales = () => {
           </div>
           <div className="project_view">
             <p>{val.offerText}</p>
-            <>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 250, hide: 400 }}
-                overlay={<Tooltip>Add to cart</Tooltip>}
-              >
-                <div
-                  // onClick={() => {
-                  //   addToCart(valu._id);
-                  // }}
-                  className="cursor-pointer"
+            {val.status === "ACTIVE" && (
+              <>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={<Tooltip>Add to cart</Tooltip>}
                 >
-                  <i className="icon-glyph-13"></i>
-                </div>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 250, hide: 400 }}
-                overlay={<Tooltip>Subscribe</Tooltip>}
-              >
-                <div
-                  className="project-link cursor-pointer"
-                  // onClick={() => {
-                  //   showSubscribtionModal(true);
-                  //   setProductId(valu._id);
-                  // }}
-                >
-                  <i className="fa fa-play"></i>
-                </div>
-              </OverlayTrigger>
-            </>
+                  <div
+                    onClick={() => {
+                      addToCart(val._id);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <i className="icon-glyph-13"></i>
+                  </div>
+                </OverlayTrigger>
+                {val.subscriptionType === "SUBSCRIBE" && (
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={<Tooltip>Subscribe</Tooltip>}
+                  >
+                    <div
+                      className="project-link cursor-pointer"
+                      onClick={() => {
+                        if (accountStatus === 1) {
+                          showSubscribtionModal(true); setProductId(val._id)
+                        } else {
+                          Alert.showToastAlert("error", "You'r not a active user");
+
+                        }
+                      }}
+                    >
+                      <i className="fa fa-play"></i>
+                    </div>
+                  </OverlayTrigger>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -172,6 +139,16 @@ const FlashSales = () => {
           </div>
         </div>
       </div>
+      {subscribtionModal && (
+        <Modal
+          showClose={true}
+          onClose={() => showSubscribtionModal(false)}
+          className="subscription_modal"
+        >
+          <SubscriptionModal productId={productId}
+            showSubscribtionModal={showSubscribtionModal} />
+        </Modal>
+      )}
     </section>
   );
 };

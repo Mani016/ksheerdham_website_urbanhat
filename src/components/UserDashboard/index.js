@@ -6,13 +6,21 @@ import Subscriptions from "./Subscriptions";
 import Wallet from "./Wallet";
 import Cart from "./Cart";
 import Schedules from "./Schedules";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import OrderHistory from "./OrderHistory";
 // import jwt_decode from "jwt-decode";
 
 const UserDashboard = () => {
     const location = useLocation();
-    let split = location.pathname.split('/')
+    const history = useHistory();
+    let split = location.pathname.split('/');
+    const token = localStorage.getItem("token");
+    React.useEffect(() => {
+        if (!token) {
+            history.push("/Our-Products");
+        }
+        // eslint-disable-next-line
+    }, [token])
     let serviceTabMenuData = [
         { tabMenuName: 'My Subscriptions', icon: 'play', url: 'my-subscriptions' },
         { tabMenuName: 'My Schedules', icon: 'clock-o', url: 'my-schedules' },
@@ -45,7 +53,6 @@ const UserDashboard = () => {
             </Tab>
         )
     });
-
     let serviceTabContentDatalist = serviceTabMenuData.map((val, i) => {
         return (
             <TabPanel key={i} >
