@@ -26,6 +26,20 @@ const Cart = () => {
         ).catch((err) => console.error(err))
 
     }
+    function AddToCart(id) {
+        let data = {
+            productId: id,
+        };
+        agent.Customers.addToCart(data)
+            .then((res) => {
+                Alert.showToastAlert("success", "Product Added Successfully");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            })
+            .catch((err) => console.error(err));
+
+    }
     function Checkout() {
         let data = { product: [] }
         items.forEach((item) => {
@@ -54,7 +68,6 @@ const Cart = () => {
                                                 <th className="text-center">Price</th>
                                                 <th className="text-center">Qty</th>
                                                 <th className="text-center">total</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         {
@@ -62,7 +75,7 @@ const Cart = () => {
                                                 <tbody key={index}>
                                                     <tr>
                                                         <td className="prod">
-                                                            <a href="#/"><img src="assets/images/product_1.png" alt="product" />
+                                                            <a href="#/"><img src={item.productId.image} alt="product" />
                                                             </a>
                                                         </td>
                                                         <td className="ptitle">{item.productId.name}
@@ -72,10 +85,12 @@ const Cart = () => {
                                                         <td className="qty">
                                                             <div> {item.quantity} </div>
                                                         </td>
-                                                        <td className="unit"><span>{item.total}</span>
+                                                        <td className="unit">  <div className="quantity"><span onClick={() => { AddToCart(item.productId._id) }}>+</span>
+                                                            <input type="number" value={item.total} readOnly />
+                                                            <span onClick={() => { RemoveFromCart(item.productId._id) }}>-</span></div>
                                                         </td>
-                                                        <td className="cursor-pointer"><div onClick={() => RemoveFromCart(item.productId._id)}><i className="fa fa-trash"></i></div>
-                                                        </td>
+                                                        {/* <td className="cursor-pointer"><div onClick={() => RemoveFromCart(item.productId._id)}><i className="fa fa-trash"></i></div>
+                                                        </td> */}
                                                     </tr>
                                                 </tbody>
                                             )

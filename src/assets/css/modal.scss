@@ -189,3 +189,69 @@
     }
   }
 }
+
+/* Schedule modal*/
+
+.schedule_modal {
+  .datail_card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+    box-shadow: 8px 7px 19px 5px #ddd;
+    padding: 20px;
+    border-radius: 15px;
+    .left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      img {
+        width: 100px;
+        height: auto;
+      }
+      h3 {
+        font-size: 24px;
+        margin: 0 0 0 20px;
+
+        span {
+          display: block;
+          font-size: 14px;
+          color: #888;
+          margin-top: -8px;
+        }
+      }
+    }
+    .right {
+      .quantity {
+        display: flex;
+        padding: 20px 0;
+        span {
+          width: 35px;
+          height: 35px;
+          border: 1px solid #ddd;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: bold;
+          &:hover {
+            border: 1px solid rgb(66, 60, 60);
+          }
+        }
+        input {
+          width: 40px;
+          margin: 0 6px;
+        }
+      }
+      .price {
+        border-top: 1px solid #ddd;
+        font-size: 18px;
+        letter-spacing: 0.03rem;
+        color: #2b343b;
+        font-weight: 600;
+        text-align: right;
+      }
+    }
+  }
+}

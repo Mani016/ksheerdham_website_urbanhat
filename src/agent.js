@@ -60,11 +60,11 @@ const Customers = {
     removeFromCart: (data) => requests.post(`customer/product/cart/subtract`, data),
     toggleSubscriptions: (data) => requests.put(`customer/subscription/${data}/status`),
     endSubscriptions: (data) => requests.put(`customer/subscription/${data}/end`),
-    subscriptionsCalendar: () => requests.get(`customer/subscription/calendar`),
     addOrder: (data) => requests.post(`customer/product/order/add-order`, data),
     productDetail: (data) => requests.get(`customer/categories/product-details?productId=${data}`),
-    addSubscription: (data) => requests.put(`customer/subscription/add`, data)
-
+    addSubscription: (data) => requests.put(`customer/subscription/add`, data),
+    subscriptionsCalendar: (data) => requests.get(`customer/subscription/calendar/customer/date?date=${data}`),
+    updateSubscription: (id, product_id, data) => requests.put(`customer/subscription/update/${id}/${product_id}`, data)
 }
 const Services = {
     Register,

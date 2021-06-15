@@ -6295,6 +6295,11 @@ input[type="number"] {
   height: 50px;
   line-height: 50px;
   padding: 0 15px;
+  transition: 0.4s;
+}
+.subscriptions .icon_buttons:hover {
+  background: #1f83ad;
+  color: #fff;
 }
 .subscriptions .cancel_icon_button {
   border: 2px solid #ca3c08;
@@ -6304,6 +6309,11 @@ input[type="number"] {
   height: 50px;
   line-height: 50px;
   padding: 0 15px;
+  transition: 0.4s;
+}
+.subscriptions .cancel_icon_button:hover {
+  background: #ca3c08;
+  color: #fff;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -6397,4 +6407,23 @@ input {
 }
 .green_btn:hover {
   opacity: 0.8;
+}
+.no_data {
+  max-width: 300px;
+  margin: 0 auto;
+}
+.quantity span{
+  width: 35px;
+  height: 35px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+td .quantity{
+  display: flex;
+  padding: 20px 0;
 }
