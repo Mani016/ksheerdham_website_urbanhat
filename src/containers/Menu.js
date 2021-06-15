@@ -85,7 +85,6 @@ const Menu = () => {
                         <ul>
                             <li className="header_search">
                                 <Link to="#" onClick={() => triggerSearch()} className="cart-toggler search_icon"><i className="icon-glyph-16"></i></Link>
-
                                 <div className="search_icon_inr">
                                     <form action="#" method="POST">
                                         <div>
