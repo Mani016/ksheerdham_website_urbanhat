@@ -14,9 +14,11 @@ const Menu = () => {
     };
     const { itemsInCart,GetCart } = React.useContext(AppContext);
     React.useEffect(()=>{
+        if(token){
         GetCart()
+        }
         // eslint-disable-next-line
-    },[])
+    },[token])
     return (
 
         <div className="menu_area">

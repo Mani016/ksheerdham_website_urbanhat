@@ -3,22 +3,23 @@ import agent from "../../agent";
 import moment from "moment";
 import Loader from "../../pages/loader";
 import Alert from "../../utils/Alert";
-import nodata from "../../assets/images/noData.png";
+import NoData from "../NoData";
 const Subscriptions = () => {
     const [data, setData] = React.useState([]);
     const [pending, setPending] = React.useState(true);
     const [refresh, setDoRefresh] = React.useState(false);
+    // React.useEffect(()=>{
+    //     window.location.reload()
+    // },[])
     React.useEffect(() => {
         setPending(true);
         let options = { pageIndex: 0, pageSize: 1000 };
-        setTimeout(() => {
-            agent.Customers.subscriptions(options)
-                .then((res) => {
-                    setData(res.data);
-                    setPending(false);
-                })
-                .catch((err) => console.error(err));
-        }, 1000);
+        agent.Customers.subscriptions(options)
+            .then((res) => {
+                setData(res.data);
+                setPending(false);
+            })
+            .catch((err) => console.error(err));
 
     }, [refresh]);
     function ToggleSubscriptions(id) {
@@ -48,11 +49,7 @@ const Subscriptions = () => {
                             ) : (
                                 <>
                                     {data.length === 0 ? (
-                                        <div className="estimate-ship">
-                                            <div className="no_data">
-                                                <img src={nodata} alt="no-data" />
-                                            </div>
-                                        </div>
+                                        <NoData />
                                     ) : (
                                         <div className="row d-flex">
                                             {data.map((item, index) => (

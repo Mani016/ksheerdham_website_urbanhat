@@ -255,3 +255,20 @@
     }
   }
 }
+
+/* Confirmation Modal*/
+.confirmation_modal {
+  text-align: center;
+  .custom_modal {
+    min-height: 40vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    h3 {
+      color: #1d82ac;
+      line-height: 30px;
+      font-size: 20px;
+    }
+  }
+}

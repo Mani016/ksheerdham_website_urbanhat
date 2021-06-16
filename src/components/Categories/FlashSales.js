@@ -30,11 +30,11 @@ const FlashSales = () => {
       };
       if (accountStatus === 1) {
         agent.Customers.addToCart(data)
-        .then((res) => {
-          Alert.showToastAlert("success", "Product Added Successfully");
-          GetCart()
-        })
-        .catch((err) => console.error(err));
+          .then((res) => {
+            Alert.showToastAlert("success", "Product Added Successfully");
+            GetCart()
+          })
+          .catch((err) => console.error(err));
       }
       else {
         Alert.showToastAlert("error", "You'r not an active user");
@@ -43,7 +43,6 @@ const FlashSales = () => {
       Alert.showToastAlert("error", "Login is required");
     }
   }
-  console.log(data);
   var settings = {
     autoplay: true,
     autoplaySpeed: 4000,
@@ -55,7 +54,6 @@ const FlashSales = () => {
     speed: 500,
     slidesToScroll: 1,
   };
-
   let ImageGalleryDataList = data.map((val, i) => {
     return (
       <div className="col-sm-12" key={i}>
@@ -93,20 +91,22 @@ const FlashSales = () => {
                   <i className="icon-glyph-13"></i>
                 </div>
               </OverlayTrigger>
-              {val.subscriptionType === "SUBSCRIBE" && (
+              {val.productId.subscriptionType === "SUBSCRIBE" && (
                 <OverlayTrigger
                   placement="right"
                   delay={{ show: 250, hide: 400 }}
                   overlay={<Tooltip>Subscribe</Tooltip>}
                 >
-                  <div
+                  <div 
                     className="project-link cursor-pointer"
                     onClick={() => {
-                      if (accountStatus === 1) {
+                     if(accountStatus) {if (accountStatus === 1) {
                         showSubscribtionModal(true); setProductId(val.productId._id)
                       } else {
-                        Alert.showToastAlert("error", "You'r not a active user");
-
+                        Alert.showToastAlert("error", "You'r not an active user");
+                      }}
+                      else{
+                        Alert.showToastAlert("error", "Login is required");
                       }
                     }}
                   >

@@ -8,16 +8,17 @@ const Main = props => {
 
     const [itemsInCart, setItemsInCart] = useState(0);
     const [accountStatus, setAccountStatus] = useState(null);
+    const [userData, setUserData] = useState({});
     const token = localStorage.getItem("token");
     function GetCart() {
         agent.Customers.getCart().then((res) => {
-            setItemsInCart(res.data.items.length);
+            setItemsInCart(res.data.items.length); 
         }).catch((err) => console.error(err))
     }
     React.useEffect(() => {
         if (token) {
             setAccountStatus(jwt_decode(token).account_status);
-
+            setUserData(jwt_decode(token))
         }
     }, [token])
     const value = {
@@ -25,7 +26,9 @@ const Main = props => {
         setItemsInCart,
         accountStatus,
         setAccountStatus,
-        GetCart
+        GetCart,
+        setUserData,
+        userData
     };
 
 

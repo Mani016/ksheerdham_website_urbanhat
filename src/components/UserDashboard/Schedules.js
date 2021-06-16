@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import DummyProduct from "../../assets/images/product_1.png";
 import Loader from "../../pages/loader";
 import Alert from "../../utils/Alert";
+import NoData from "../NoData";
 const Schedules = () => {
 
   const [modalShow, setModalShow] = React.useState(false);
@@ -46,7 +47,8 @@ const Schedules = () => {
             className="schedule_modal"
             style={{ maxWidth: "550px" }}
           >
-            {data.map((item, index) =>
+            { data.length === 0 ? <NoData/>:
+            data.map((item, index) =>
               <div key={index}>
                 {pending ? <Loader height={'250px'} /> :
                   <div className="datail_card" >

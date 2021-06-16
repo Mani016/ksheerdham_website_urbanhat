@@ -122,7 +122,7 @@ const Register = () => {
                         <div className="col-md-5 col-xs-12 register_form">
                             <div id="register-form-wrapper" className="scrollbar">
                                 <div id="register-form">
-                                    <div className="title form-title">LOGIN TO YOUR ACCOUNT</div>
+                                    <div className="title form-title">Register</div>
                                     <div className="coupon_info">
                                         <div className="register ">
                                             <Link to="/login" className="text-primary"> Already have an account?</Link>

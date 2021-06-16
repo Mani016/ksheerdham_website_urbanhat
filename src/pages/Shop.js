@@ -57,7 +57,7 @@ const Products = () => {
                     .catch((err) => console.error(err));
             }
             else {
-                Alert.showToastAlert("error", "You'r not a active user");
+                Alert.showToastAlert("error", "You'r not an active user");
             }
         } else {
             Alert.showToastAlert("error", "Login is required");
@@ -125,12 +125,14 @@ const Products = () => {
                                         <div
                                             className="project-link cursor-pointer"
                                             onClick={() => {
-                                                if (accountStatus === 1) {
+                                                if(accountStatus) {if (accountStatus === 1) {
                                                     showSubscribtionModal(true); setProductId(valu._id)
-                                                } else {
-                                                    Alert.showToastAlert("error", "You'r not a active user");
-
-                                                }
+                                                  } else {
+                                                    Alert.showToastAlert("error", "You'r not an active user");
+                                                  }}
+                                                  else{
+                                                    Alert.showToastAlert("error", "Login is required");
+                                                  }
                                             }}
                                         >
                                             <i className="fa fa-play"></i>

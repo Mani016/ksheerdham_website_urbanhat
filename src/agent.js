@@ -1,3 +1,4 @@
+
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
@@ -6,13 +7,7 @@ const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'http://159.89.163.98/api/';
 const responseBody = res => res.body;
 
-// let token = null;
-// const tokenPlugin = req => {
-//     if (token) {
-//         req.set('Authorization', `Bearer  ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lciI6IjYwYzRmNTUwN2QwOGE5MjZmZTA5NTI1NCIsImVtYWlsIjoibWFuaXNoYWd1cHRhMDE2QGdtYWlsLmNvbSIsIm5hbWUiOiJtYW5pc2hhIiwiYWNjb3VudF9zdGF0dXMiOjAsImlhdCI6MTYyMzYwMDE4NH0.lHPz8I3I_zcNWHRqH8A54YTFd0kF8gjdatDQGsCzIKc'}`);
-//     }
-// };
-const token = localStorage.getItem("token")
+const token = localStorage.getItem("token");
 const requests = {
     del: url =>
         superagent

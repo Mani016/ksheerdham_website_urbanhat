@@ -551,6 +551,7 @@ section {
   z-index: 9999;
   position: relative;
   border-top: 1px solid #fbf3f3;
+  /* box-shadow: 6px 13px 14px 3px #ededed */
 }
 
 #navigation {
@@ -782,6 +783,7 @@ section {
     background-color: transparent;
     position: absolute;
     width: 100%;
+    /* box-shadow: 6px 13px 14px 3px #ededed; */
   }
   .navbar-light .navbar-toggler {
     position: absolute;
@@ -1863,7 +1865,6 @@ section {
 }
 
 .product_wrp:hover .product_info {
-  z-index: 99999;
   position: relative;
 }
 
@@ -5383,7 +5384,7 @@ header {
   margin-bottom: 12px;
   height: 35px;
   border: 1px solid #ddd;
-  width: 300px;
+  width: 100%;
   padding: 0px 10px;
 }
 .coupon_show h3::before {
@@ -5457,7 +5458,7 @@ p.checkout-coupon input[type="submit"] {
   margin-bottom: 12px;
   height: 35px;
   border: 1px solid #ddd;
-  width: 300px;
+  width: 100%;
   padding: 0px 10px;
 }
 .coupon_info .button {
@@ -6094,8 +6095,9 @@ p.title-country {
   font-size: 25px;
 }
 #login-form-wrapper {
-  box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+  box-shadow: 1px 3px 13px 13px #ededed;
   width: 100%;
+  border-radius: 10px;
   overflow: auto;
   height: 400px;
   align-items: center;
@@ -6103,7 +6105,8 @@ p.title-country {
   display: flex;
 }
 #register-form-wrapper {
-  box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+  box-shadow: 1px 3px 13px 13px #ededed;
+  border-radius: 10px;
   width: 100%;
   overflow: auto;
   height: 500px;
@@ -6430,4 +6433,76 @@ td .quantity {
   display: flex;
   padding: 20px 0;
   justify-content: center;
+}
+.user_dashboard_title {
+  padding: 25px 30px;
+  /* box-shadow: 6px 13px 14px 3px #ededed; */
+  border-radius: 15px;
+  border: 1px solid #ededed;
+  align-items: center;
+}
+.user_dashboard_title .left p {
+  font-size: 20px;
+  margin-right: 30px;
+  font-weight: bold;
+}
+.user_dashboard_title .left p strong {
+  font-weight: 500;
+  color: #1f83ad;
+  padding: 0 10px;
+}
+.user_dashboard_title .acount_active_status  {
+  background: #1f83ad;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 5px 30px;
+  font-weight: bold;
+  text-align: center;
+  max-width: 150px;
+}
+.user_dashboard_title .acount_inactive_status {
+  background: #ca3c08;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 5px 30px;
+  font-weight: bold;
+  text-align: center;
+  max-width: 150px;
+}
+@media (max-width: 767px) {
+  .user_dashboard_title .left p strong {
+    padding: 10px 0;
+    display: block;
+  }
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #ededed;
+}
+.shop-tab-wrapper ul li .shop-nav-tabs {
+  color: #1f83ad;
+  cursor: pointer;
+  padding: 10px 35px;
+  display: block;
+}
+.tab_selected {
+  background: #1f83ad;
+  border: 1px solid #fff;
+  padding: initial !important;
+}
+.tab_selected .shop-nav-tabs {
+  color: #fff !important;
+}
+.login_screen.sub-title {
+  color: #1f83ad !important;
+  padding-bottom: 10px;
+  word-break: break-word;
+}
+.user_login_img {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto 25px;
 }
