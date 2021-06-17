@@ -203,8 +203,9 @@
     border-radius: 15px;
     .left {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       align-items: center;
+      width: 100%;
       img {
         width: 100px;
         height: auto;
@@ -219,6 +220,9 @@
           color: #888;
           margin-top: -8px;
         }
+      }
+      @media (max-width: 767px) {
+        flex-wrap: wrap;
       }
     }
     .right {
