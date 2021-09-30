@@ -40,6 +40,8 @@ const MobileMenu = () => {
     );
     offcanvasMobileMenu.classList.remove("active");
   };
+  const token = localStorage.getItem("token")
+
 
   return (
     <div className="offcanvasMobileMenu" id="offcanvas-mobile-menu">
@@ -79,13 +81,13 @@ const MobileMenu = () => {
                   </li>
                   <li><Link to="/about-us">About Us</Link>
                   </li>
-                  <li><Link to="single-services">My Cart</Link>
+                  <li><Link to={token ? "/user-dashboard/my-cart" : "/"}>My Cart</Link>
                   </li>
                 </ul>
               </li>
             </ul>
 
-           
+
           </nav>
 
           {/* Search Form */}
@@ -110,17 +112,21 @@ const MobileMenu = () => {
           {/* Social Icon*/}
           <div className="header_top_left">
             <ul className="header_socil list-inline">
-              <li>
-                <Link to="#/" className="fa fa-facebook"></Link>
+              <li> 
+                {/* eslint-disable-next-line */}
+                <a href="https://www.facebook.com/ksheerdham" target="_blank" rel="noopener noreferrer" className="fa fa-facebook"></a>
               </li>
               <li>
-                <Link to="#/" className="fa fa-twitter"></Link>
+                {/* eslint-disable-next-line */}
+                <a href="https://www.instagram.com/ksheerdham/" target="_blank" rel="noopener noreferrer" className="fa fa-instagram"></a>
               </li>
               <li>
-                <Link to="#/" className="fa fa-linkedin"></Link>
+                {/* eslint-disable-next-line */}
+                <a href="https://twitter.com/ksheerdham" target="_blank" rel="noopener noreferrer" className="fa fa-twitter"></a>
               </li>
               <li>
-                <Link to="#/" className="fa fa-google-plus"></Link>
+                {/* eslint-disable-next-line */}
+                <a href="https://www.youtube.com/channel/UCsy2Oz2Uq6MmpBSaslva71A" rel="noopener noreferrer" className="fa fa-youtube"></a>
               </li>
             </ul>
           </div>

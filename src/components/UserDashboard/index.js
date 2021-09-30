@@ -8,6 +8,8 @@ import Cart from "./Cart";
 import Schedules from "./Schedules";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import OrderHistory from "./OrderHistory";
+import PaymentResponse from "./PaymentResponse";
+
 import AppContext from "../../Context";
 // import jwt_decode from "jwt-decode";
 
@@ -18,9 +20,15 @@ const UserDashboard = () => {
     let split = location.pathname.split("/");
     const token = localStorage.getItem("token");
     React.useEffect(() => {
-        if (!token) {
-            history.push("/Our-Products");
+        let isActive = true;
+        if (isActive) {
+            if (!token) {
+                history.push("/Our-Products");
+            }
         }
+        return (() => {
+            isActive = false;
+        })
         // eslint-disable-next-line
     }, [token]);
     let serviceTabMenuData = [
@@ -32,17 +40,25 @@ const UserDashboard = () => {
     ];
     const [value, setValue] = React.useState(0);
     React.useEffect(() => {
-        if (split[2] === "my-subscriptions") {
-            setValue(0);
-        } else if (split[2] === "my-schedules") {
-            setValue(1);
-        } else if (split[2] === "my-wallet") {
-            setValue(2);
-        } else if (split[2] === "my-cart") {
-            setValue(3);
-        } else {
-            setValue(4);
+        let isActive = true;
+        if (isActive) {
+            if (split[2] === "my-subscriptions") {
+                setValue(0);
+            } else if (split[2] === "my-schedules") {
+                setValue(1);
+            } else if (split[2] === "my-wallet") {
+                setValue(2);
+            } else if (split[2] === "my-cart") {
+                setValue(3);
+            } else if (split[2] === "payment-response") {
+                setValue(5);
+            } else {
+                setValue(4);
+            }
         }
+        return (() => {
+            isActive = false;
+        })
     }, [split]);
     let serviceTabMenuDatalist = serviceTabMenuData.map((val, i) => {
         return (
@@ -73,6 +89,8 @@ const UserDashboard = () => {
                             <Schedules />
                         ) : split[2] === "my-cart" ? (
                             <Cart />
+                        ) : split[2] === "payment-response" ? (
+                            <PaymentResponse />
                         ) : (
                             <OrderHistory />
                         )}
@@ -103,8 +121,8 @@ const UserDashboard = () => {
                         </div>
                         <div className="d-flex">
                             <div className={accountStatus === 1 ? "acount_active_status mx-2" : "acount_inactive_status mx-2"}>
-                                {accountStatus === 1 ? 'Active' : 'In Active'}</div>
-                            <div className={"acount_inactive_status mx-2 cursor-pointer"} onClick={() => { localStorage.clear();  window.location= "/"}}>
+                                {accountStatus === 1 ? 'Approved' : 'Un Approved'}</div>
+                            <div className={"acount_inactive_status mx-2 cursor-pointer"} onClick={() => { localStorage.clear(); window.location = "/login" }}>
                                 <i className="fa fa-sign-out"></i> Log Out</div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ class Contact extends Component{
         return(
         <Fragment>
             <MetaTags>
-              <title>FuodBorne | Contact Us</title>
+              <title>Ksheerdham | Contact Us</title>
               <meta
                 name="description"
                 content="Organic Food React JS Template."

@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------
-Project: Fuodborne - Organic Food HTML Template
+Project: Ksheerdham - Organic Food HTML Template
 Version: 1.1
 Primary use: Food Farms, Organic Farms 
 -------------------------------------------------------------------*/
@@ -1898,14 +1898,16 @@ section {
 .product_wrp:hover .project_view div:last-child {
   margin-top: 70px;
 }
-.product_wrp:hover .product_info h4 {
+/* .product_wrp:hover .product_info h4 {
   color: #fff;
-}
+} */
 
 /* .product_wrp:hover .product_rating li {
   color: #8ab003;
 } */
-
+select, input{
+  margin-bottom: 12px !important;
+}
 .product_wrp:hover .on_sale {
   z-index: 999;
 }
@@ -6452,7 +6454,7 @@ td .quantity {
   padding: 0 10px;
 }
 .user_dashboard_title .acount_active_status  {
-  background: #1f83ad;
+  background: #37ad1f;
   color: #fff;
   border-radius: 20px;
   font-weight: 500;
@@ -6466,7 +6468,7 @@ td .quantity {
   color: #fff;
   border-radius: 20px;
   font-weight: 500;
-  padding: 5px 30px;
+  padding: 5px 29px;
   font-weight: bold;
   text-align: center;
   max-width: 150px;
@@ -6505,4 +6507,15 @@ td .quantity {
   height: auto;
   display: block;
   margin: 0 auto 25px;
+}
+.calendar{
+  padding: 10px;
+    height: 700px;
+    width: 100%;
+    border: 1px solid #e6e6e6;
+}
+.payment_card{
+  width: 540px;
+  height: 525px;
+  margin: 10px auto;
 }

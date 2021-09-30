@@ -18,10 +18,16 @@ const Login = () => {
   let history = useHistory();
 
   React.useEffect(() => {
-    if (token) {
-      setIsLogin(true);
-      setDecoded(jwt_decode(token));
+    let isActive = true;
+    if (isActive) {
+      if (token) {
+        setIsLogin(true);
+        setDecoded(jwt_decode(token));
+      }
     }
+    return (() => {
+      isActive = false;
+    })
   }, [token]);
   function GetOtp() {
     let formIsComplete = true;
@@ -70,6 +76,7 @@ const Login = () => {
             Alert.showToastAlert("error", res.message);
           } else {
             localStorage.setItem("token", res.token);
+            localStorage.setItem("mobile", data.mobile_no);
             Alert.showToastAlert("success", res.message);
             window.location = '/user-dashboard/my-subscriptions';
           }
@@ -94,13 +101,17 @@ const Login = () => {
                 <div className="title">Welcome to Ksheerdham!</div>
                 <div className="description">
                   <Typewriter
+                    options={{
+                      autoStart: true,
+                      loop: true,
+                    }}
                     onInit={(typewriter) => {
                       typewriter
                         .typeString(
                           "Ksheerdham is committed to deliver  A2 Gir Cow Milk & Milk Products in its natural form."
                         )
                         .deleteAll()
-                        .start();
+                        .start()
                     }}
                   />
                 </div>
@@ -199,7 +210,7 @@ const Login = () => {
                           onClick={() => {
                             setIsLogin(false);
                             localStorage.clear();
-                            window.location= "/"
+                            window.location = "/"
                           }}
                           className="cancel-contact submitBnt"
                           value="Log Out"

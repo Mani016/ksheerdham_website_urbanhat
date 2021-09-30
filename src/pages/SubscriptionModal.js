@@ -15,16 +15,28 @@ const SubscriptionModal = (props) => {
     const tomorrow = moment().add(new Date().getHours() < 21 ? 1 : 2, 'days');
     const [customerDetails, setCustomerDetails] = React.useState({});
     React.useEffect(() => {
-        setAvailability('Everyday')
+        let isActive = true;
+        if (isActive) {
+            setAvailability('Everyday');
+        }
+        return (() => {
+            isActive = false;
+        })
     }, [])
     React.useEffect(() => {
-        agent.Customers.productDetail(props.productId).then((res) => {
-            setProductDetails(res.data);
-            setPending(false);
-        }).catch((err) => console.error(err))
-        agent.Customers.wallet().then((res) => {
-            setCustomerDetails(res.data)
-        }).catch((err) => console.error(err))
+        let isActive = true;
+        if (isActive) {
+            agent.Customers.productDetail(props.productId).then((res) => {
+                setProductDetails(res.data);
+                setPending(false);
+            }).catch((err) => console.error(err))
+            agent.Customers.wallet().then((res) => {
+                setCustomerDetails(res.data)
+            }).catch((err) => console.error(err));
+        }
+        return (() => {
+            isActive = false;
+        })
     }, [props.productId])
 
     const scheduleOrder = (id) => {
@@ -45,7 +57,6 @@ const SubscriptionModal = (props) => {
             Alert.showToastAlert('warning', 'Not Having Enough Balance');
             formIsComplete = false;
         }
-        console.log(startDate, endDate)
         let order_data = {
             product: props.productId,
             quantity: Number(quantity),
@@ -55,15 +66,15 @@ const SubscriptionModal = (props) => {
         };
         if (formIsComplete) {
             agent.Customers.addSubscription(order_data).then((res) => {
-                if(res.code === 400){
+                if (res.code === 400) {
                     Alert.showToastAlert('warning', res.message);
                     props.showSubscribtionModal(false);
                 }
-                else{
+                else {
                     Alert.showToastAlert('success', res.message);
                     props.showSubscribtionModal(false);
                 }
-              
+
             }).catch((err) => console.error(err))
 
         }
@@ -149,7 +160,10 @@ const SubscriptionModal = (props) => {
                                     min={tomorrow.format('YYYY-MM-DD')} value={startDate}
                                 />
                             </p>
-                            {availability !== 'Instant Delivery' && <p className="input_fields input_name">
+                            {
+                                console.log()
+                            }
+                            {(availability !== 'Instant Delivery' && availability !== 'For One Day') && <p className="input_fields input_name">
                                 <label>
                                     End Date<span className="required">*</span>
                                 </label>

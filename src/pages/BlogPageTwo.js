@@ -61,7 +61,7 @@ class BlogPagTwo extends Component{
     return(
         <Fragment>
         <MetaTags>
-          <title>FuodBorne | Single Service</title>
+          <title>Ksheerdham | Single Service</title>
           <meta
             name="description"
             content="Organic Food React JS Template."

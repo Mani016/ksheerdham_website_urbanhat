@@ -12,14 +12,20 @@ const Main = props => {
     const token = localStorage.getItem("token");
     function GetCart() {
         agent.Customers.getCart().then((res) => {
-            setItemsInCart(res.data.items.length); 
+            setItemsInCart(res.data.items.length);
         }).catch((err) => console.error(err))
     }
     React.useEffect(() => {
-        if (token) {
-            setAccountStatus(jwt_decode(token).account_status);
-            setUserData(jwt_decode(token))
+        let isActive = true;
+        if (isActive) {
+            if (token) {
+                setAccountStatus(jwt_decode(token).account_status);
+                setUserData(jwt_decode(token))
+            }
         }
+        return (() => {
+            isActive = false;
+        })
     }, [token])
     const value = {
         itemsInCart,

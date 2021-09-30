@@ -68,7 +68,7 @@ class Services extends Component{
 
 		<Fragment>
             <MetaTags>
-              <title>FuodBorne | Services</title>
+              <title>Ksheerdham | Services</title>
               <meta
                 name="description"
                 content="Organic Food React JS Template."

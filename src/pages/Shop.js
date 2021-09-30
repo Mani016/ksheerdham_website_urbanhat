@@ -11,7 +11,7 @@ import SubscriptionModal from "./SubscriptionModal";
 import AppContext from "../Context";
 
 const Products = () => {
-    const { accountStatus,GetCart } = React.useContext(AppContext);
+    const { accountStatus, GetCart } = React.useContext(AppContext);
     const [subscribtionModal, showSubscribtionModal] = React.useState(false);
     const [products, setProducts] = React.useState([]);
     const [productName, setProductName] = React.useState("");
@@ -20,7 +20,13 @@ const Products = () => {
     const [productId, setProductId] = React.useState('');
 
     React.useEffect(() => {
-        GetAllProducts();
+        let isActive = true;
+        if (isActive) {
+            GetAllProducts();
+        }
+        return (() => {
+            isActive = false;
+        })
     }, []);
     function Search() {
         if (productName !== "") {
@@ -57,7 +63,7 @@ const Products = () => {
                     .catch((err) => console.error(err));
             }
             else {
-                Alert.showToastAlert("error", "You'r not an active user");
+                Alert.showToastAlert("error", "You are not authorized to access");
             }
         } else {
             Alert.showToastAlert("error", "Login is required");
@@ -120,19 +126,20 @@ const Products = () => {
                                     <OverlayTrigger
                                         placement="right"
                                         delay={{ show: 250, hide: 400 }}
-                                        overlay={<Tooltip>Subscribe</Tooltip>}
-                                    >
+                                        overlay={<Tooltip>Subscribe</Tooltip>}>
                                         <div
                                             className="project-link cursor-pointer"
                                             onClick={() => {
-                                                if(accountStatus) {if (accountStatus === 1) {
-                                                    showSubscribtionModal(true); setProductId(valu._id)
-                                                  } else {
-                                                    Alert.showToastAlert("error", "You'r not an active user");
-                                                  }}
-                                                  else{
+                                                if (accountStatus) {
+                                                    if (accountStatus === 1) {
+                                                        showSubscribtionModal(true); setProductId(valu._id)
+                                                    } else {
+                                                        Alert.showToastAlert("error", "You are not authorized to access");
+                                                    }
+                                                }
+                                                else {
                                                     Alert.showToastAlert("error", "Login is required");
-                                                  }
+                                                }
                                             }}
                                         >
                                             <i className="fa fa-play"></i>
@@ -150,7 +157,7 @@ const Products = () => {
     return (
         <Fragment>
             <MetaTags>
-                <title>FuodBorne | Single Service</title>
+                <title>Ksheerdham | Single Service</title>
                 <meta name="description" content="Organic Food React JS Template." />
             </MetaTags>
             <LayoutOne>

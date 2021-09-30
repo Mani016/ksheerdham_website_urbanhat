@@ -10,9 +10,15 @@ import FlashSales from './FlashSales';
 const Categories = () => {
     const [data, setData] = React.useState([]);
     React.useEffect(() => {
-        agent.Products.categories().then((res) => {
-            setData(res.data.categories)
-        }).catch((err) => console.error(err))
+        let isActive = true;
+        if (isActive) {
+            agent.Products.categories().then((res) => {
+                setData(res.data.categories)
+            }).catch((err) => console.error(err))
+        }
+        return (() => {
+            isActive = false;
+        })
     }, [])
 
 

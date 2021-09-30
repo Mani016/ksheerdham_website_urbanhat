@@ -8,10 +8,9 @@ const Subscriptions = () => {
     const [data, setData] = React.useState([]);
     const [pending, setPending] = React.useState(true);
     const [refresh, setDoRefresh] = React.useState(false);
-    // React.useEffect(()=>{
-    //     window.location.reload()
-    // },[])
     React.useEffect(() => {
+        let isActive = true;
+        if (isActive) {
         setPending(true);
         let options = { pageIndex: 0, pageSize: 1000 };
         agent.Customers.subscriptions(options)
@@ -20,7 +19,10 @@ const Subscriptions = () => {
                 setPending(false);
             })
             .catch((err) => console.error(err));
-
+        }
+            return (() => {
+                isActive = false;
+              })
     }, [refresh]);
     function ToggleSubscriptions(id) {
         agent.Customers.toggleSubscriptions(id)

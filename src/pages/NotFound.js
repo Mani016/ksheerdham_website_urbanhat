@@ -8,7 +8,7 @@ const NotFound = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>FuodBorne | Not Found</title>
+        <title>Ksheerdham | Not Found</title>
         <meta
           name="description"
           content="404 page of React JS Organic Food Template."

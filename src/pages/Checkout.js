@@ -9,7 +9,7 @@ const Checkout = () => {
     return(
         <Fragment>
             <MetaTags>
-              <title>FuodBorne | About</title>
+              <title>Ksheerdham | About</title>
               <meta
                 name="description"
                 content="Organic Food React JS Template."

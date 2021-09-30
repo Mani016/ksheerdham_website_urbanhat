@@ -14,7 +14,7 @@ const AboutContent = () => {
                         <div className="about_item_tb">
                             <div className="about_item_tbcell">
                                 <div className="base-header base_header_left">
-                                    <small>Welcome To Our Fuodborne Farms</small>
+                                    <small>Welcome To Our Ksheerdham Farms</small>
                                     <h3>It's A2 Milk !!!</h3>
                                 </div>
                                 <div className="about_item">

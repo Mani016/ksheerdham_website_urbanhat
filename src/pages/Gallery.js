@@ -138,7 +138,7 @@ class Gallery extends Component{
 
         <Fragment>
             <MetaTags>
-              <title>FuodBorne | Gallery </title>
+              <title>Ksheerdham | Gallery </title>
               <meta
                 name="description"
                 content="Organic Food React JS Template."

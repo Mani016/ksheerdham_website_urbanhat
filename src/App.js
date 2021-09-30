@@ -92,10 +92,14 @@ function App() {
             component={Categories}
           />
           <Route
-            path={`${
-              process.env.PUBLIC_URL + "/categories/:id/sub-categories"
-            }`}
+            path={`${process.env.PUBLIC_URL + "/categories/:id/sub-categories"
+              }`}
             component={SubCategories}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL + "/user-dashboard/payment-response"
+              }`}
+            component={PaymentResponse}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL + "/services"}`}

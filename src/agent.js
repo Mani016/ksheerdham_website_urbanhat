@@ -8,6 +8,7 @@ const API_ROOT = 'http://159.89.163.98/api/';
 const responseBody = res => res.body;
 
 const token = localStorage.getItem("token");
+
 const requests = {
     del: url =>
         superagent
@@ -59,12 +60,19 @@ const Customers = {
     productDetail: (data) => requests.get(`customer/categories/product-details?productId=${data}`),
     addSubscription: (data) => requests.put(`customer/subscription/add`, data),
     subscriptionsCalendar: (data) => requests.get(`customer/subscription/calendar/customer/date?date=${data}`),
-    updateSubscription: (id, product_id, data) => requests.put(`customer/subscription/update/${id}/${product_id}`, data)
+    updateSubscription: (id, product_id, data) => requests.put(`customer/subscription/update/${id}/${product_id}`, data),
+    getCalendar: () => requests.get(`customer/subscription/calendar`)
+}
+const paytm = {
+    paynow: (data) => requests.post(`customer/paytm/paynow`, data),
+    callback: () => requests.post(`customer/paytm/callback`)
+
 }
 const Services = {
     Register,
     Login,
     Products,
-    Customers
+    Customers,
+    paytm
 }
 export default Services

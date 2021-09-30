@@ -1,6 +1,5 @@
 {
-  "homepage": "https://santhemes.com/FuodBorneJS/",
-  "name": "fuodborne-react",
+  "name": "Ksheerdham-react",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -18,6 +17,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.5",
+    "react-big-calendar": "^0.33.5",
     "react-bootstrap": "^1.3.0",
     "react-calendar": "^3.4.0",
     "react-countup": "^4.3.3",

@@ -14,9 +14,15 @@ const Menu = () => {
     };
     const { itemsInCart,GetCart } = React.useContext(AppContext);
     React.useEffect(()=>{
+        let isActive = true;
+        if (isActive) {
         if(token){
         GetCart()
         }
+    }
+        return (() => {
+            isActive = false;
+          })
         // eslint-disable-next-line
     },[token])
     return (

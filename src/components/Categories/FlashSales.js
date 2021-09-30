@@ -16,11 +16,17 @@ const FlashSales = () => {
   const token = localStorage.getItem("token");
 
   React.useEffect(() => {
-    agent.Products.flashSales()
+    let isActive = true;
+    if (isActive) {
+      agent.Products.flashSales()
       .then((res) => {
         setData(res.data);
       })
       .catch((err) => console.error(err));
+    }
+    return (() => {
+      isActive = false;
+    })
   }, []);
 
   function addToCart(id) {
@@ -37,7 +43,7 @@ const FlashSales = () => {
           .catch((err) => console.error(err));
       }
       else {
-        Alert.showToastAlert("error", "You'r not an active user");
+        Alert.showToastAlert("error", "You are not authorized to access");
       }
     } else {
       Alert.showToastAlert("error", "Login is required");
@@ -97,15 +103,17 @@ const FlashSales = () => {
                   delay={{ show: 250, hide: 400 }}
                   overlay={<Tooltip>Subscribe</Tooltip>}
                 >
-                  <div 
+                  <div
                     className="project-link cursor-pointer"
                     onClick={() => {
-                     if(accountStatus) {if (accountStatus === 1) {
-                        showSubscribtionModal(true); setProductId(val.productId._id)
-                      } else {
-                        Alert.showToastAlert("error", "You'r not an active user");
-                      }}
-                      else{
+                      if (accountStatus) {
+                        if (accountStatus === 1) {
+                          showSubscribtionModal(true); setProductId(val.productId._id)
+                        } else {
+                          Alert.showToastAlert("error", "You are not authorized to access");
+                        }
+                      }
+                      else {
                         Alert.showToastAlert("error", "Login is required");
                       }
                     }}

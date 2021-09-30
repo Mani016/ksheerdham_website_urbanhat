@@ -1,60 +1,159 @@
 import React, { Fragment } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import MetaTags from "react-meta-tags";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../components/Breadcrumb";
 import agent from '../../agent';
 import DummyProduct from '../../assets/images/product_1.png'
 import Alert from '../../utils/Alert';
-
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import Modal from "../../components/Modal";
+import SubscriptionModal from "../../pages/SubscriptionModal";
+import AppContext from "../../Context";
 const SubCategories = () => {
     const [data, setData] = React.useState([]);
     const [categoryId, setCategoryId] = React.useState('');
     let location = useLocation();
     let history = useHistory();
+    const { accountStatus, GetCart } = React.useContext(AppContext);
+    const [subscribtionModal, showSubscribtionModal] = React.useState(false);
+    const token = localStorage.getItem("token");
+    const [productId, setProductId] = React.useState('');
 
     React.useEffect(() => {
-        if (location.state) {
-            setCategoryId(location.state.id)
+        let isActive = true;
+        if (isActive) {
+            if (location.state) {
+                setCategoryId(location.state.id)
+            }
+            else {
+                history.push('/Our-Categories')
+            }
         }
-        else {
-            history.push('/Our-Categories')
-        }
+        return (() => {
+            isActive = false;
+        })
     }, [location.state, history])
     React.useEffect(() => {
-        if (categoryId !== '') {
-            agent.Products.subcatoriesWiseProducts(categoryId).then((res) => {
-                if (res.data.length) {
-                    setData(res.data[0].product)
-                }
-                else {
-                    Alert.showToastAlert('warning', res.message);
-                    setData([])
-                }
+        let isActive = true;
+        if (isActive) {
+            if (categoryId !== '') {
+                agent.Products.subcatoriesWiseProducts(categoryId).then((res) => {
+                    if (res.data.length) {
+                        setData(res.data[0].product)
+                    }
+                    else {
+                        Alert.showToastAlert('warning', res.message);
+                        setData([])
+                    }
 
-            }).catch((err) => console.error(err))
+                }).catch((err) => console.error(err))
+            }
         }
+        return (() => {
+            isActive = false;
+        })
     }, [categoryId])
-    console.log(data)
+    function addToCart(id) {
+        if (token) {
+            let data = {
+                productId: id,
+            };
+            if (accountStatus === 1) {
+                agent.Customers.addToCart(data)
+                    .then((res) => {
+                        Alert.showToastAlert("success", "Product Added Successfully");
+                        GetCart();
+                    })
+                    .catch((err) => console.error(err));
+            }
+            else {
+                Alert.showToastAlert("error", "You are not authorized to access");
+            }
+        } else {
+            Alert.showToastAlert("error", "Login is required");
+        }
+    }
 
-
-    const serviceListtMap = data.map((valu, i) => {
+    const productsMap = data.map((valu, i) => {
         return (
-            <div className="col-md-4 col-sm-12" key={i}>
-                <div className="service-item">
-                    <div className={valu.subscriptionType === "SUBSCRIBE" ? 'active_status' : 'inactive_status'}>
-                        <span>{valu.subscriptionType}</span>
+            <div className="col-md-3 col-sm-12" key={i}>
+                <div className="product_wrp">
+                    <div className="product_img">
+                        <img src={valu.image ? valu.image : DummyProduct} alt="product" />
+                        <div
+                            className={
+                                valu.status === "ACTIVE" ? "active_status" : "inactive_status"}
+                        >
+                            <span>{valu.status}</span>
+                        </div>
                     </div>
-                    <div className="img_serv">
-
-                        <Link to={`${valu._id}`}> <img src={valu.image ? valu.image : DummyProduct} alt="service" style={{ height: '185px', width: '100%' }} /></Link>
+                    <div className="product_info">
+                        <h4>{valu.name}</h4>
+                        <ul className="product_rating">
+                            <li>
+                                <i className="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i className="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i className="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i className="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i className="fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <span className="product_price">Rs.{valu.price}</span>
                     </div>
-                    <div className="service_text">
-                        <Link to={`${valu._id}`}><h4>{valu.name}</h4></Link>
-                        <p>Rs.{valu.price}</p>
-                        <p>Unit size:{valu.unitSize}</p>
+                    <div className="project_view">
+                        {valu.status === "ACTIVE" && (
+                            <>
+                                <OverlayTrigger
+                                    placement="right"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={<Tooltip>Add to cart</Tooltip>}
+                                >
+                                    <div
+                                        onClick={() => {
+                                            addToCart(valu._id);
+                                        }}
+                                        className="cursor-pointer"
+                                    >
+                                        <i className="icon-glyph-13"></i>
+                                    </div>
+                                </OverlayTrigger>
+                                {valu.subscriptionType === "SUBSCRIBE" && (
+                                    <OverlayTrigger
+                                        placement="right"
+                                        delay={{ show: 250, hide: 400 }}
+                                        overlay={<Tooltip>Subscribe</Tooltip>}
+                                    >
+                                        <div
+                                            className="project-link cursor-pointer"
+                                            onClick={() => {
+                                                if (accountStatus) {
+                                                    if (accountStatus === 1) {
+                                                        showSubscribtionModal(true); setProductId(valu._id)
+                                                    } else {
+                                                        Alert.showToastAlert("error", "You are not authorized to access");
+                                                    }
+                                                }
+                                                else {
+                                                    Alert.showToastAlert("error", "Login is required");
+                                                }
+                                            }}
+                                        >
+                                            <i className="fa fa-play"></i>
+                                        </div>
+                                    </OverlayTrigger>
+                                )}
+                            </>
+                        )}
                     </div>
-                    <Link to={`${valu._id}`} className="serv_link"><i className="icon-glyph-40"></i></Link>
                 </div>
             </div>
         )
@@ -104,7 +203,7 @@ const SubCategories = () => {
                             {/* End: Heading */}
 
                             <div className="row">
-                                {serviceListtMap}
+                                {productsMap}
                             </div>
 
                         </div>
@@ -113,7 +212,16 @@ const SubCategories = () => {
                     {/*==================== End : Service Section ====================*/}
 
                 </div>
-
+                {subscribtionModal && (
+                    <Modal
+                        showClose={true}
+                        onClose={() => showSubscribtionModal(false)}
+                        className="subscription_modal"
+                    >
+                        <SubscriptionModal productId={productId}
+                            showSubscribtionModal={showSubscribtionModal} />
+                    </Modal>
+                )}
             </LayoutOne>
         </Fragment>
 

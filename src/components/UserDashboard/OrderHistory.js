@@ -9,10 +9,16 @@ const OrderHistory = () => {
   const [data, setData] = React.useState([]);
   const [pending, setPending] = React.useState(true);
   React.useEffect(() => {
+    let isActive = true;
+    if (isActive) {
     agent.Customers.billingHistory().then((res) => {
       setData(res.data);
       setPending(false)
     });
+  }
+    return (() => {
+      isActive = false;
+    })
   }, []);
   return (
     <React.Fragment>

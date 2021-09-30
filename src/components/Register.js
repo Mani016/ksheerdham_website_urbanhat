@@ -110,6 +110,10 @@ const Register = () => {
                                 </div>
                                 <div className="description">
                                     <Typewriter
+                                        options={{
+                                            autoStart: true,
+                                            loop: true,
+                                        }}
                                         onInit={(typewriter) => {
                                             typewriter.typeString('Ksheerdham is committed to deliver  A2 Gir Cow Milk & Milk Products in its natural form.')
                                                 .deleteAll()

@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <Fragment> 
       <MetaTags>
-        <title>FuodBorne | Home</title>
+        <title>Ksheerdham | Home</title>
         <meta
           name="description"
           content="Organic Food React JS Template."

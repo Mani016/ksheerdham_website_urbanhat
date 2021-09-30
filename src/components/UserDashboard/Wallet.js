@@ -1,24 +1,37 @@
 import React from 'react';
 import agent from '../../agent';
+import AppContext from '../../Context';
 import Alert from '../../utils/Alert';
 const Wallet = () => {
     const [data, setData] = React.useState({});
     const [amount, setAmount] = React.useState(0);
     const [refresh, doRefresh] = React.useState(false);
+    const { accountStatus } = React.useContext(AppContext);
+
     React.useEffect(() => {
+        let isActive = true;
+        if (isActive) {
         agent.Customers.wallet().then((res) => {
             setData(res.data)
         }).catch((err) => console.error(err))
-      
+    }
+        return (() => {
+            isActive = false;
+          })
     }, [refresh]);
     function AddAdmount() {
         let data = {
             amount: Number(amount)
         }
-        agent.Customers.addMoney(data).then((res) => {
-            Alert.showToastAlert('success', res.message)
-            doRefresh(!refresh)
-        }).catch((err) => console.error(err))
+        if (accountStatus === 1) {
+            agent.Customers.addMoney(data).then((res) => {
+                Alert.showToastAlert('success', res.message)
+                doRefresh(!refresh)
+            }).catch((err) => console.error(err))
+        }
+        else {
+            Alert.showToastAlert("error", "You are not authorized to access");
+        }
     }
     return (
         <React.Fragment>
